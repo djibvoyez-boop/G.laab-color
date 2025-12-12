@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Plan de travail couleurs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #f5f5f2;
+      --paper: #ffffff;
+      --line: #d7d7d0;
+      --accent: #ff7a90;
+      --accent-soft: rgba(255, 122, 144, 0.15);
+      --text: #202020;
+      --muted: #8a8a84;
+      --border: #c7c7c0;
+      --radius-lg: 16px;
+      --radius-md: 10px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      background: repeating-linear-gradient(
+        0deg,
+        #f5f5f2,
+        #f5f5f2 10px,
+        #f0f0eb 10px,
+        #f0f0eb 20px
+      );
+      color: var(--text);
+      height: 100vh;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: minmax(270px, 360px) minmax(0, 1fr);
+      gap: 18px;
+      width: min(1200px, 100vw - 32px);
+      margin: 16px auto;
+      height: calc(100vh - 32px);
+    }
+    @media (max-width: 900px) {
+      .app {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto minmax(0, 1fr);
+        height: auto;
+      }
+    }
+
+    .panel {
+      background: var(--paper);
+      border-radius: var(--radius-lg);
+      padding: 16px 16px 12px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .panel-title {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .pill {
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid rgba(255, 122, 144, 0.4);
+      white-space: nowrap;
+    }
+
+    .picker-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      padding: 10px;
+      border-radius: var(--radius-md);
+      background: #fafaf7;
+      border: 1px dashed var(--border);
+    }
+    .picker-main {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    /* ---- roue + zone S/L ---- */
+    .color-wheel-wrap {
+      position: relative;
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background:
+        conic-gradient(
+          #f00,
+          #ff0,
+          #0f0,
+          #0ff,
+          #00f,
+          #f0f,
+          #f00
+        );
+      cursor: crosshair;
+      border: 2px solid #d0d0c8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .color-wheel-inner {
+      position: absolute;
+      inset: 18px;
+      border-radius: 50%;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    /* carré S/L à l’intérieur, façon Illustrator */
+    .sl-area {
+      position: relative;
+      width: 70px;
+      height: 70px;
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: crosshair;
+    }
+    .sl-area::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, #fff, transparent);
+      mix-blend-mode: normal;
+    }
+    .sl-area::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, #000, transparent);
+      mix-blend-mode: multiply;
+    }
+    .sl-indicator {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.5);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .color-wheel-indicator {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+      box-sizing: border-box;
+      background: #000;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .picker-fields {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .field-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .hex-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .hex-prefix {
+      padding: 6px 8px;
+      border-radius: 999px;
+      background: #f2f2ec;
+      border: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .hex-input {
+      flex: 1;
+      padding: 6px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: var(--text);
+      font-size: 13px;
+      outline: none;
+    }
+    .hex-input:focus { border-color: var(--accent); }
+
+    .color-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .opacity-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .opacity-row input[type="range"] {
+      flex: 1;
+    }
+
+    .role-buttons {
+      display: flex;
+      gap: 6px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 9px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      background: #ffffff;
+      color: var(--muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+      white-space: nowrap;
+    }
+    .btn span.dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--muted);
+      opacity: 0.7;
+    }
+    .btn-primary-role {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: #fff5f7;
+    }
+    .btn:hover {
+      border-color: #b0b0aa;
+      color: var(--text);
+      background: #f9f9f4;
+    }
+    .btn-primary-role span.dot { background: var(--accent); }
+    .secondary-dot { background: #7acbff !important; }
+    .tertiary-dot { background: #c5bf3a !important; }
+
+    .btn-small { font-size: 10px; padding: 4px 8px; }
+
+    /* formes */
+    .shape-buttons {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .shape-btn {
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      padding: 4px 7px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .shape-btn-icon {
+      width: 14px;
+      height: 14px;
+      border: 1px solid #b8b8b0;
+      background: #f7f7f3;
+    }
+    .shape-btn-icon.rounded { border-radius: 4px; }
+    .shape-btn-icon.circle { border-radius: 50%; }
+    .shape-btn-icon.triangle {
+      width: 0;
+      height: 0;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-bottom: 12px solid #b8b8b0;
+      background: transparent;
+    }
+    .shape-btn.active {
+      border-color: var(--accent);
+      background: #fff5f7;
+      color: var(--accent);
+    }
+
+    /* effets */
+    .effects-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .effects-row select {
+      padding: 4px 6px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* dégradés */
+    .gradient-block {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 8px;
+      border-radius: var(--radius-md);
+      background: #fafaf7;
+      border: 1px dashed var(--border);
+    }
+    .gradient-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+    .grad-preview {
+      flex: 1;
+      height: 18px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+    }
+    .gradient-options {
+      display: flex;
+      gap: 6px;
+      margin-top: 4px;
+      align-items: center;
+      flex-wrap: wrap;
+      font-size: 11px;
+    }
+    .gradient-options select {
+      padding: 4px 6px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-size: 11px;
+      background: #ffffff;
+      color: var(--muted);
+    }
+    .gradient-size-select {
+      padding: 4px 6px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-size: 11px;
+      background: #ffffff;
+      color: var(--muted);
+    }
+    .grad-colors {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 4px;
+    }
+    .grad-color-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+    }
+    .grad-color-row input[type="text"] {
+      width: 80px;
+      padding: 4px 6px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      font-size: 11px;
+    }
+    .grad-color-row input[type="range"] {
+      flex: 1;
+    }
+    .grad-color-row span {
+      width: 26px;
+      text-align: right;
+      color: var(--muted);
+    }
+
+    .palette-strip {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 6px 2px 2px;
+      scrollbar-width: thin;
+      scrollbar-color: #c3c3bc transparent;
+    }
+    .palette-strip::-webkit-scrollbar { height: 6px; }
+    .palette-strip::-webkit-scrollbar-thumb {
+      background: #c3c3bc;
+      border-radius: 999px;
+    }
+    .swatch-chip {
+      min-width: 70px;
+      max-width: 100px;
+      background: #ffffff;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      padding: 4px 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--muted);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .swatch-chip-color {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+    }
+    .swatch-chip-text {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .swatch-chip-hex { font-size: 11px; color: var(--text); }
+    .swatch-chip-role {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+    }
+
+    .panel-footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+    .btn-outline {
+      background: transparent;
+      border-style: dashed;
+      border-color: var(--border);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--muted);
+      padding: 6px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    .btn-outline:hover {
+      border-color: #b0b0aa;
+      color: var(--text);
+      background: #f9f9f4;
+    }
+    .btn-accent {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #ffffff;
+      font-weight: 600;
+      padding-inline: 12px;
+    }
+    .btn-accent:hover { filter: brightness(1.05); }
+
+    /* workspace */
+    .workspace {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .workspace-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 2px;
+    }
+    .workspace-title {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .workspace-sub {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .zoom-controls {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .zoom-btn {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      padding: 0;
+    }
+    .zoom-btn:hover { background: #f7f7f2; }
+
+    .composition {
+      position: relative;
+      flex: 1;
+      min-height: 280px;
+      border-radius: var(--radius-lg);
+      background: #ffffff;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .comp-content {
+      position: absolute;
+      inset: 0;
+      transform-origin: top left;
+      background-image:
+        linear-gradient(to right, var(--line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+      background-size: 40px 40px;
+      background-repeat: repeat;
+    }
+
+    .color-card {
+      position: absolute;
+      border-radius: 18px;
+      border: 1px solid rgba(0, 0, 0, 0.25);
+      cursor: grab;
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 8px 10px;
+      box-sizing: border-box;
+      color: #000;
+      background-clip: padding-box;
+      box-shadow: none; /* 2D */
+    }
+    .color-card.dragging { cursor: grabbing; }
+
+    .card-lg {
+      width: 200px;
+      height: 150px;
+      font-size: 13px;
+    }
+    .card-md {
+      width: 140px;
+      height: 100px;
+      font-size: 11px;
+    }
+    .card-sm {
+      width: 90px;
+      height: 70px;
+      font-size: 10px;
+      padding: 6px 8px;
+    }
+
+    /* formes */
+    .color-card[data-shape="rect"] { border-radius: 4px; }
+    .color-card[data-shape="rounded"] { border-radius: 18px; }
+    .color-card[data-shape="square"] { border-radius: 4px; }
+    .card-lg[data-shape="square"],
+    .card-lg[data-shape="circle"],
+    .card-lg[data-shape="triangle"] { width: 150px; height: 150px; }
+    .card-md[data-shape="square"],
+    .card-md[data-shape="circle"],
+    .card-md[data-shape="triangle"] { width: 110px; height: 110px; }
+    .card-sm[data-shape="square"],
+    .card-sm[data-shape="circle"],
+    .card-sm[data-shape="triangle"] { width: 70px; height: 70px; }
+
+    .color-card[data-shape="circle"] {
+      border-radius: 50%;
+      text-align: center;
+      align-items: center;
+    }
+    .color-card[data-shape="triangle"] {
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+      align-items: center;
+      text-align: center;
+      padding: 6px;
+    }
+
+    .card-label {
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 999px;
+      padding: 2px 6px;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      align-self: flex-start;
+    }
+    .card-hex {
+      background: rgba(0, 0, 0, 0.45);
+      color: #fff;
+      border-radius: 999px;
+      padding: 3px 7px;
+      font-size: 10px;
+      max-width: 100%;
+      cursor: pointer;
+    }
+    .card-sm .card-label {
+      font-size: 8px;
+      padding-inline: 5px;
+    }
+    .card-sm .card-hex {
+      font-size: 9px;
+      padding: 2px 6px;
+    }
+
+    .color-card.selected {
+      outline: 2px dashed #333333;
+      outline-offset: 2px;
+    }
+
+    .empty-hint {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      pointer-events: none;
+      padding: 0 18px;
+    }
+    .empty-hint span {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+    }
+
+    .controls-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      align-items: center;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .transform-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 4px;
+      padding-top: 4px;
+      border-top: 1px dashed var(--border);
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .transform-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .transform-row span { width: 60px; }
+    .transform-row input[type="range"] { flex: 1; }
+
+    /* effets CSS */
+    .color-card.effect-blur {
+      filter: blur(2px);
+    }
+    .color-card.effect-translucent {
+      backdrop-filter: blur(4px);
+    }
+    .color-card.effect-grain::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(circle, rgba(0,0,0,0.18) 1px, transparent 1px);
+      background-size: 3px 3px;
+      mix-blend-mode: multiply;
+      opacity: 0.4;
+      border-radius: inherit;
+    }
+
+    /* notes texte */
+    .note {
+      position: absolute;
+      min-width: 120px;
+      min-height: 60px;
+      padding: 6px 8px;
+      background: #fffbd1;
+      border-radius: 6px;
+      border: 1px solid #e0d68a;
+      font-size: 11px;
+      color: #4b4b2a;
+      cursor: move;
+    }
+    .note[contenteditable="true"]:focus {
+      outline: 1px dashed #c1b86d;
+    }
+
+    /* textures */
+    .textures-strip {
+      display: flex;
+      gap: 6px;
+      margin-top: 4px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+    .texture-chip {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background-size: cover;
+      background-position: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .texture-chip.active {
+      outline: 2px solid var(--accent);
+      outline-offset: 1px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Panneau de gauche -->
+    <aside class="panel">
+      <div class="panel-header">
+        <div class="panel-title">Palette perso</div>
+        <div class="pill">Plan de travail 2D ✏️</div>
+      </div>
+
+      <!-- Sélecteur couleur -->
+      <div class="picker-row">
+        <div class="picker-main">
+          <div class="color-wheel-wrap" id="colorWheel">
+            <div class="color-wheel-inner">
+              <div class="sl-area" id="slArea">
+                <div class="sl-indicator" id="slIndicator"></div>
+              </div>
+            </div>
+            <div class="color-wheel-indicator" id="wheelIndicator"></div>
+          </div>
+
+          <div class="picker-fields">
+            <div class="field-label">Couleur actuelle</div>
+            <div class="hex-row">
+              <div class="hex-prefix">HEX</div>
+              <input id="hexInput" class="hex-input" value="#ff7a90" spellcheck="false" />
+            </div>
+            <div class="color-info">
+              <div id="rgbInfo">RGB : 255, 122, 144</div>
+              <div id="hslInfo">HSL : 350°, 100%, 74%</div>
+              <div id="opacityInfo">Opacité : 100%</div>
+            </div>
+            <div class="opacity-row">
+              <span>Opacité</span>
+              <input type="range" id="opacityInput" min="10" max="100" value="100" />
+            </div>
+          </div>
+        </div>
+
+        <div class="role-buttons">
+          <button class="btn btn-primary-role" data-role="primaire">
+            <span class="dot"></span> Primaire
+          </button>
+          <button class="btn" data-role="secondaire">
+            <span class="dot secondary-dot"></span> Secondaire
+          </button>
+          <button class="btn" data-role="tertiaire">
+            <span class="dot tertiary-dot"></span> Tertiaire
+          </button>
+          <button class="btn btn-small" id="complementaryBtn">Complémentaire</button>
+        </div>
+      </div>
+
+      <!-- Forme des cartes -->
+      <div>
+        <div class="field-label" style="margin-bottom:4px;">Forme des cartes</div>
+        <div class="shape-buttons">
+          <button class="shape-btn active" data-shape="rounded">
+            <div class="shape-btn-icon rounded"></div> Arrondi
+          </button>
+          <button class="shape-btn" data-shape="rect">
+            <div class="shape-btn-icon"></div> Rectangle
+          </button>
+          <button class="shape-btn" data-shape="square">
+            <div class="shape-btn-icon"></div> Carré
+          </button>
+          <button class="shape-btn" data-shape="circle">
+            <div class="shape-btn-icon circle"></div> Rond
+          </button>
+          <button class="shape-btn" data-shape="triangle">
+            <div class="shape-btn-icon triangle"></div> Triangle
+          </button>
+        </div>
+      </div>
+
+      <!-- Effets -->
+      <div class="effects-row">
+        <span>Effet</span>
+        <select id="effectSelect">
+          <option value="none">Aucun</option>
+          <option value="blur">Flou</option>
+          <option value="translucent">Translucide</option>
+          <option value="grain">Granuleux</option>
+        </select>
+        <button class="btn btn-small" id="applyEffectBtn">Appliquer à la sélection</button>
+      </div>
+
+      <!-- Dégradés multi-couleurs -->
+      <div class="gradient-block">
+        <div class="gradient-top-row">
+          <div class="field-label">Carte dégradé</div>
+          <div class="grad-preview" id="gradPreview"></div>
+        </div>
+        <div class="grad-colors" id="gradColorsContainer">
+          <!-- lignes de couleurs générées en JS -->
+        </div>
+        <button class="btn btn-small" id="addGradColorBtn">+ Ajouter une couleur (max 5)</button>
+
+        <div class="gradient-options">
+          <select id="gradType">
+            <option value="linear-h">Linéaire horizontal</option>
+            <option value="linear-v">Linéaire vertical</option>
+            <option value="linear-d">Linéaire diagonal</option>
+            <option value="radial">Radial</option>
+          </select>
+          <select id="gradSize" class="gradient-size-select">
+            <option value="secondaire">Taille secondaire</option>
+            <option value="primaire">Taille primaire</option>
+            <option value="tertiaire">Taille tertiaire</option>
+          </select>
+          <button class="btn btn-small" id="addGradientBtn">Ajouter dégradé</button>
+        </div>
+      </div>
+
+      <!-- Matières -->
+      <div>
+        <div class="field-label">Matières (textures)</div>
+        <input type="file" id="textureUpload" accept="image/*" multiple />
+        <div class="textures-strip" id="texturesStrip">
+          <!-- textures preview -->
+        </div>
+      </div>
+
+      <div class="field-label">Historique des couleurs</div>
+      <div class="palette-strip" id="paletteStrip"></div>
+
+      <!-- Textes / suppression / group -->
+      <div class="controls-row">
+        <label>
+          <input type="checkbox" id="toggleText" checked />
+          Afficher le texte
+        </label>
+        <button class="btn btn-small" id="groupBtn">Grouper</button>
+        <button class="btn btn-small" id="ungroupBtn">Dégrouper</button>
+        <button class="btn btn-small" id="deleteSelectedBtn">Supprimer sélection</button>
+      </div>
+
+      <!-- Transformations -->
+      <div class="transform-controls">
+        <div>Transformations (cartes sélectionnées) :</div>
+        <div class="transform-row">
+          <span>Rotation</span>
+          <input type="range" id="rotationInput" min="-180" max="180" value="0" disabled />
+        </div>
+        <div class="transform-row">
+          <span>Taille</span>
+          <input type="range" id="scaleInput" min="50" max="200" value="100" disabled />
+        </div>
+        <div class="transform-row">
+          <span>Opacité</span>
+          <input type="range" id="cardOpacityInput" min="10" max="100" value="100" disabled />
+        </div>
+        <button class="btn btn-small" id="addNoteBtn">+ Ajouter une note</button>
+        <div style="font-size:10px;">Astuce : clic pour sélectionner, Maj+clic = multi-sélection. Suppr = effacer.</div>
+      </div>
+
+      <!-- Export -->
+      <div class="controls-row">
+        <span>Export :</span>
+        <select id="exportBgSelect">
+          <option value="transparent">Fond transparent</option>
+          <option value="grid">Avec grille</option>
+          <option value="white">Fond blanc</option>
+        </select>
+        <select id="exportTypeSelect">
+          <option value="png">PNG</option>
+          <option value="jpeg">JPEG</option>
+        </select>
+      </div>
+
+      <div class="panel-footer">
+        <button class="btn-outline" id="resetBtn">Tout effacer</button>
+        <button class="btn btn-accent" id="exportBtn">Exporter</button>
+      </div>
+    </aside>
+
+    <!-- Panneau de droite : plan de travail -->
+    <section class="workspace panel">
+      <div class="workspace-header">
+        <div>
+          <div class="workspace-title">Plan de travail couleurs</div>
+          <div class="workspace-sub">
+            Glisse, tourne, zoome, superpose tes cartes comme des post-it.
+          </div>
+        </div>
+        <div class="zoom-controls">
+          <button class="zoom-btn" id="zoomOutBtn">−</button>
+          <span id="zoomLabel">100%</span>
+          <button class="zoom-btn" id="zoomInBtn">+</button>
+        </div>
+      </div>
+
+      <div class="composition" id="composition">
+        <div class="comp-content" id="compContent"></div>
+        <div class="empty-hint" id="emptyHint">
+          <span>Ajoute des cartes (couleurs ou dégradés) puis organise-les ici 📐</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // ----- DOM refs -----
+    const hexInput = document.getElementById("hexInput");
+    const rgbInfo = document.getElementById("rgbInfo");
+    const hslInfo = document.getElementById("hslInfo");
+    const opacityInfo = document.getElementById("opacityInfo");
+    const opacityInput = document.getElementById("opacityInput");
+
+    const roleButtons = document.querySelectorAll(".role-buttons .btn[data-role]");
+    const complementaryBtn = document.getElementById("complementaryBtn");
+
+    const composition = document.getElementById("composition");
+    const compContent = document.getElementById("compContent");
+    const emptyHint = document.getElementById("emptyHint");
+    const paletteStrip = document.getElementById("paletteStrip");
+    const resetBtn = document.getElementById("resetBtn");
+    const exportBtn = document.getElementById("exportBtn");
+    const toggleTextCheckbox = document.getElementById("toggleText");
+    const deleteSelectedBtn = document.getElementById("deleteSelectedBtn");
+    const rotationInput = document.getElementById("rotationInput");
+    const scaleInput = document.getElementById("scaleInput");
+    const cardOpacityInput = document.getElementById("cardOpacityInput");
+    const zoomOutBtn = document.getElementById("zoomOutBtn");
+    const zoomInBtn = document.getElementById("zoomInBtn");
+    const zoomLabel = document.getElementById("zoomLabel");
+    const shapeButtons = document.querySelectorAll(".shape-btn");
+    const effectSelect = document.getElementById("effectSelect");
+    const applyEffectBtn = document.getElementById("applyEffectBtn");
+    const groupBtn = document.getElementById("groupBtn");
+    const ungroupBtn = document.getElementById("ungroupBtn");
+    const addNoteBtn = document.getElementById("addNoteBtn");
+    const exportBgSelect = document.getElementById("exportBgSelect");
+    const exportTypeSelect = document.getElementById("exportTypeSelect");
+
+    const colorWheel = document.getElementById("colorWheel");
+    const wheelIndicator = document.getElementById("wheelIndicator");
+    const slArea = document.getElementById("slArea");
+    const slIndicator = document.getElementById("slIndicator");
+
+    const gradPreview = document.getElementById("gradPreview");
+    const gradColorsContainer = document.getElementById("gradColorsContainer");
+    const addGradColorBtn = document.getElementById("addGradColorBtn");
+    const gradTypeSelect = document.getElementById("gradType");
+    const gradSizeSelect = document.getElementById("gradSize");
+    const addGradientBtn = document.getElementById("addGradientBtn");
+
+    const textureUpload = document.getElementById("textureUpload");
+    const texturesStrip = document.getElementById("texturesStrip");
+
+    let zIndexCounter = 1;
+    let showText = true;
+    let currentShape = "rounded";
+    let currentZoom = 1;
+    let wheelDragging = false;
+    let slDragging = false;
+    let currentH = 350;
+    let currentS = 100;
+    let currentL = 60;
+    let currentOpacity = 1;
+    let currentEffect = "none";
+    let groupCounter = 1;
+    let textures = [];
+    let currentTextureId = null;
+    const selectedCards = new Set();
+
+    // Gradient state
+    let gradientStops = [
+      { id: 1, color: "#ff7a90", pos: 0 },
+      { id: 2, color: "#ffffff", pos: 100 },
+    ];
+    let nextGradId = 3;
+
+    // ----- Color utils -----
+    function normalizeHex(value) {
+      if (!value) return null;
+      let v = value.trim().toLowerCase();
+      if (!v.startsWith("#")) v = "#" + v;
+      const short = /^#([0-9a-f]{3})$/i.exec(v);
+      if (short) {
+        const r = short[1][0];
+        const g = short[1][1];
+        const b = short[1][2];
+        v = "#" + r + r + g + g + b + b;
+      }
+      const hexRegex = /^#([0-9a-f]{6})$/i;
+      if (!hexRegex.test(v)) return null;
+      return v.toUpperCase();
+    }
+
+    function hexToRgb(hex) {
+      hex = normalizeHex(hex);
+      if (!hex) return null;
+      const intVal = parseInt(hex.slice(1), 16);
+      const r = (intVal >> 16) & 255;
+      const g = (intVal >> 8) & 255;
+      const b = intVal & 255;
+      return { r, g, b };
+    }
+
+    function rgbToHex(r, g, b) {
+      return (
+        "#" +
+        [r, g, b]
+          .map((x) => {
+            const v = Math.max(0, Math.min(255, Math.round(x)));
+            return v.toString(16).padStart(2, "0");
+          })
+          .join("")
+      ).toUpperCase();
+    }
+
+    function rgbToHsl(r, g, b) {
+      r /= 255; g /= 255; b /= 255;
+      const max = Math.max(r, g, b);
+      const min = Math.min(r, g, b);
+      let h, s;
+      const l = (max + min) / 2;
+      if (max === min) {
+        h = s = 0;
+      } else {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+          case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+          case g: h = (b - r) / d + 2; break;
+          case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+      }
+      return {
+        h: Math.round(h * 360),
+        s: Math.round(s * 100),
+        l: Math.round(l * 100),
+      };
+    }
+
+    function hslToHex(h, s, l) {
+      h = ((h % 360) + 360) % 360;
+      s /= 100;
+      l /= 100;
+      const c = (1 - Math.abs(2 * l - 1)) * s;
+      const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+      const m = l - c / 2;
+      let r1, g1, b1;
+      if (h < 60) { r1 = c; g1 = x; b1 = 0; }
+      else if (h < 120) { r1 = x; g1 = c; b1 = 0; }
+      else if (h < 180) { r1 = 0; g1 = c; b1 = x; }
+      else if (h < 240) { r1 = 0; g1 = x; b1 = c; }
+      else if (h < 300) { r1 = x; g1 = 0; b1 = c; }
+      else { r1 = c; g1 = 0; b1 = x; }
+      const r = (r1 + m) * 255;
+      const g = (g1 + m) * 255;
+      const b = (b1 + m) * 255;
+      return rgbToHex(r, g, b);
+    }
+
+    function updateSLBackground() {
+      const baseHex = hslToHex(currentH, 100, 50);
+      slArea.style.background = `linear-gradient(to right, #fff, ${baseHex})`;
+    }
+
+    function setCurrentColorFromHex(hex) {
+      const validHex = normalizeHex(hex);
+      if (!validHex) return;
+      hexInput.value = validHex;
+      const rgb = hexToRgb(validHex);
+      if (rgb) {
+        const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+        currentH = hsl.h;
+        currentS = hsl.s;
+        currentL = hsl.l;
+        updateWheelIndicator();
+        updateSLIndicatorFromHSL();
+        updateSLBackground();
+        rgbInfo.textContent = `RGB : ${rgb.r}, ${rgb.g}, ${rgb.b}`;
+        hslInfo.textContent = `HSL : ${hsl.h}°, ${hsl.s}%, ${hsl.l}%`;
+      }
+    }
+
+    function updateWheelIndicator() {
+      const rect = colorWheel.getBoundingClientRect();
+      const radius = rect.width / 2;
+      const innerRadius = radius - 4;
+      const angleRad = (currentH - 90) * (Math.PI / 180);
+      const cx = radius;
+      const cy = radius;
+      const x = cx + innerRadius * Math.cos(angleRad);
+      const y = cy + innerRadius * Math.sin(angleRad);
+      wheelIndicator.style.left = `${x}px`;
+      wheelIndicator.style.top = `${y}px`;
+      wheelIndicator.style.background = hslToHex(currentH, 100, 50);
+    }
+
+    function updateSLIndicatorFromHSL() {
+      const rect = slArea.getBoundingClientRect();
+      const x = (currentS / 100) * rect.width;
+      const y = (1 - currentL / 100) * rect.height;
+      slIndicator.style.left = `${x}px`;
+      slIndicator.style.top = `${y}px`;
+    }
+
+    function updateFromSLMouse(e) {
+      const rect = slArea.getBoundingClientRect();
+      let x = e.clientX - rect.left;
+      let y = e.clientY - rect.top;
+      x = Math.max(0, Math.min(rect.width, x));
+      y = Math.max(0, Math.min(rect.height, y));
+      const s = (x / rect.width) * 100;
+      const l = (1 - y / rect.height) * 100;
+      currentS = Math.max(0, Math.min(100, s));
+      currentL = Math.max(0, Math.min(100, l));
+      slIndicator.style.left = `${x}px`;
+      slIndicator.style.top = `${y}px`;
+      const hex = hslToHex(currentH, currentS, currentL);
+      const rgb = hexToRgb(hex);
+      hexInput.value = hex;
+      if (rgb) {
+        const hsl = { h: currentH, s: Math.round(currentS), l: Math.round(currentL) };
+        rgbInfo.textContent = `RGB : ${rgb.r}, ${rgb.g}, ${rgb.b}`;
+        hslInfo.textContent = `HSL : ${hsl.h}°, ${hsl.s}%, ${hsl.l}%`;
+      }
+    }
+
+    function handleWheelEvent(e) {
+      const rect = colorWheel.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const angle = Math.atan2(dy, dx);
+      let deg = (angle * 180) / Math.PI;
+      deg = deg + 90;
+      if (deg < 0) deg += 360;
+      currentH = deg;
+      updateWheelIndicator();
+      updateSLBackground();
+      const hex = hslToHex(currentH, currentS, currentL);
+      setCurrentColorFromHex(hex);
+    }
+
+    // init couleur
+    setCurrentColorFromHex("#FF7A90");
+    updateSLBackground();
+    updateSLIndicatorFromHSL();
+
+    // --- interactions roue & SL ---
+    colorWheel.addEventListener("mousedown", (e) => {
+      wheelDragging = true;
+      handleWheelEvent(e);
+    });
+    document.addEventListener("mousemove", (e) => {
+      if (wheelDragging) handleWheelEvent(e);
+      if (slDragging) updateFromSLMouse(e);
+    });
+    document.addEventListener("mouseup", () => {
+      wheelDragging = false;
+      slDragging = false;
+    });
+
+    slArea.addEventListener("mousedown", (e) => {
+      slDragging = true;
+      updateFromSLMouse(e);
+      e.stopPropagation();
+    });
+
+    // HEX input
+    hexInput.addEventListener("blur", () => {
+      const hex = normalizeHex(hexInput.value);
+      if (!hex) {
+        alert("Code HEX invalide. Exemple : #FF7A90");
+        setCurrentColorFromHex(hslToHex(currentH, currentS, currentL));
+      } else {
+        setCurrentColorFromHex(hex);
+      }
+    });
+
+    // opacité globale pour nouvelles cartes
+    opacityInput.addEventListener("input", () => {
+      currentOpacity = parseInt(opacityInput.value, 10) / 100;
+      opacityInfo.textContent = `Opacité : ${opacityInput.value}%`;
+    });
+
+    // complémentaire
+    complementaryBtn.addEventListener("click", () => {
+      currentH = (currentH + 180) % 360;
+      const hex = hslToHex(currentH, currentS, currentL);
+      setCurrentColorFromHex(hex);
+    });
+
+    // ----- palette / historique -----
+    function addSwatch(data) {
+      const swatch = document.createElement("div");
+      swatch.classList.add("swatch-chip");
+      swatch.dataset.type = data.type;
+      if (data.type === "color") swatch.dataset.hex = data.hex;
+      if (data.type === "gradient") {
+        swatch.dataset.gradientStops = JSON.stringify(data.stops);
+        swatch.dataset.gradientType = data.gradType;
+      }
+      const colorDot = document.createElement("div");
+      colorDot.classList.add("swatch-chip-color");
+      if (data.type === "color") {
+        colorDot.style.background = data.hex;
+      } else {
+        colorDot.style.background = data.cssGradient;
+      }
+      const textWrap = document.createElement("div");
+      textWrap.classList.add("swatch-chip-text");
+      const hexSpan = document.createElement("div");
+      hexSpan.classList.add("swatch-chip-hex");
+      hexSpan.textContent = data.type === "color" ? data.hex : "dégradé";
+      const roleSpan = document.createElement("div");
+      roleSpan.classList.add("swatch-chip-role");
+      roleSpan.textContent = data.label;
+      textWrap.appendChild(hexSpan);
+      textWrap.appendChild(roleSpan);
+      swatch.appendChild(colorDot);
+      swatch.appendChild(textWrap);
+      paletteStrip.appendChild(swatch);
+      paletteStrip.scrollTo({ left: paletteStrip.scrollWidth, behavior: "smooth" });
+    }
+
+    paletteStrip.addEventListener("click", async (e) => {
+      const swatch = e.target.closest(".swatch-chip");
+      if (!swatch) return;
+      const type = swatch.dataset.type;
+      if (type === "color") {
+        const hex = swatch.dataset.hex;
+        setCurrentColorFromHex(hex);
+        try {
+          await navigator.clipboard.writeText(hex);
+        } catch {}
+      } else if (type === "gradient") {
+        const stops = JSON.parse(swatch.dataset.gradientStops || "[]");
+        const gradType = swatch.dataset.gradientType || "linear-h";
+        gradientStops = stops.map((s, idx) => ({ id: idx + 1, ...s }));
+        nextGradId = gradientStops.length + 1;
+        renderGradColors();
+        updateGradientPreview(gradType);
+      }
+    });
+
+    // ----- formes -----
+    shapeButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        shapeButtons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentShape = btn.dataset.shape;
+      });
+    });
+
+    // ----- gradient UI -----
+    function renderGradColors() {
+      gradColorsContainer.innerHTML = "";
+      gradientStops.sort((a, b) => a.pos - b.pos);
+      gradientStops.forEach((stop) => {
+        const row = document.createElement("div");
+        row.classList.add("grad-color-row");
+        row.dataset.id = stop.id;
+        const input = document.createElement("input");
+        input.type = "text";
+        input.value = stop.color;
+        input.addEventListener("blur", () => {
+          const norm = normalizeHex(input.value);
+          if (norm) {
+            stop.color = norm;
+            input.value = norm;
+            updateGradientPreview();
+          } else {
+            input.value = stop.color;
+          }
+        });
+        const range = document.createElement("input");
+        range.type = "range";
+        range.min = 0; range.max = 100;
+        range.value = stop.pos;
+        range.addEventListener("input", () => {
+          stop.pos = parseInt(range.value, 10);
+          perc.textContent = stop.pos + "%";
+          updateGradientPreview();
+        });
+        const perc = document.createElement("span");
+        perc.textContent = stop.pos + "%";
+        row.appendChild(input);
+        row.appendChild(range);
+        row.appendChild(perc);
+        gradColorsContainer.appendChild(row);
+      });
+      updateGradientPreview();
+    }
+
+    function buildGradientCSS(type) {
+      const stops = [...gradientStops].sort((a, b) => a.pos - b.pos);
+      const stopStr = stops.map((s) => `${s.color} ${s.pos}%`).join(", ");
+      let angleStr = "90deg";
+      if (type === "linear-v") angleStr = "180deg";
+      if (type === "linear-d") angleStr = "135deg";
+      if (type === "radial") {
+        return `radial-gradient(circle, ${stopStr})`;
+      }
+      return `linear-gradient(${angleStr}, ${stopStr})`;
+    }
+
+    function updateGradientPreview(typeOverride) {
+      const t = typeOverride || gradTypeSelect.value;
+      gradPreview.style.backgroundImage = buildGradientCSS(t);
+    }
+
+    addGradColorBtn.addEventListener("click", () => {
+      if (gradientStops.length >= 5) return;
+      gradientStops.push({
+        id: nextGradId++,
+        color: "#ffffff",
+        pos: Math.round(100 / (gradientStops.length + 1) * gradientStops.length),
+      });
+      renderGradColors();
+    });
+
+    gradTypeSelect.addEventListener("change", () => updateGradientPreview());
+    renderGradColors();
+
+    addGradientBtn.addEventListener("click", () => {
+      if (gradientStops.length < 2) {
+        alert("Ajoute au moins deux couleurs au dégradé.");
+        return;
+      }
+      const type = gradTypeSelect.value;
+      const sizeRole = gradSizeSelect.value;
+      const cssGradient = buildGradientCSS(type);
+      createGradientCard(gradientStops, type, sizeRole, cssGradient);
+    });
+
+    // ----- textures -----
+    textureUpload.addEventListener("change", (e) => {
+      const files = Array.from(e.target.files || []);
+      files.forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const id = Date.now() + "-" + Math.random().toString(16).slice(2);
+          textures.push({ id, name: file.name, url: reader.result });
+          renderTextures();
+        };
+        reader.readAsDataURL(file);
+      });
+      textureUpload.value = "";
+    });
+
+    function renderTextures() {
+      texturesStrip.innerHTML = "";
+      textures.forEach((tex) => {
+        const div = document.createElement("div");
+        div.classList.add("texture-chip");
+        div.style.backgroundImage = `url(${tex.url})`;
+        div.dataset.id = tex.id;
+        if (tex.id === currentTextureId) div.classList.add("active");
+        div.addEventListener("click", () => {
+          currentTextureId = tex.id;
+          renderTextures();
+        });
+        texturesStrip.appendChild(div);
+      });
+    }
+
+    // ----- création cartes -----
+    function applyEffectToCard(card, effect) {
+      card.classList.remove("effect-blur", "effect-translucent", "effect-grain");
+      card.dataset.effect = effect;
+      if (effect === "blur") card.classList.add("effect-blur");
+      else if (effect === "translucent") card.classList.add("effect-translucent");
+      else if (effect === "grain") card.classList.add("effect-grain");
+    }
+
+    function applyTextureToCard(card, textureId) {
+      card.dataset.textureId = textureId || "";
+      const tex = textures.find((t) => t.id === textureId);
+      if (tex) {
+        const baseBg = card.dataset.gradientCss || card.dataset.hex || "#ffffff";
+        card.style.backgroundImage = `${baseBg}, url(${tex.url})`;
+        card.style.backgroundSize = "cover, cover";
+        card.style.backgroundBlendMode = "normal, multiply";
+      } else {
+        if (card.dataset.gradientCss) {
+          card.style.backgroundImage = card.dataset.gradientCss;
+        } else {
+          card.style.backgroundImage = "";
+          card.style.backgroundColor = card.dataset.hex || "#ffffff";
+        }
+      }
+    }
+
+    function createColorCard(hex, role) {
+      const card = document.createElement("div");
+      card.classList.add("color-card");
+      card.classList.add(
+        role === "primaire" ? "card-lg" : role === "secondaire" ? "card-md" : "card-sm"
+      );
+      card.dataset.hex = hex;
+      card.dataset.role = role;
+      card.dataset.shape = currentShape;
+      card.dataset.rotation = "0";
+      card.dataset.scale = "1";
+      card.dataset.opacity = currentOpacity.toString();
+      card.style.left = "50%";
+      card.style.top = "50%";
+      card.style.opacity = currentOpacity.toString();
+      card.style.backgroundColor = hex;
+      card.dataset.gradientCss = "";
+      applyEffectToCard(card, currentEffect);
+      applyTextureToCard(card, currentTextureId);
+
+      const label = document.createElement("div");
+      label.classList.add("card-label");
+      label.textContent = role;
+
+      const hexLabel = document.createElement("div");
+      hexLabel.classList.add("card-hex");
+      hexLabel.textContent = hex;
+
+      card.appendChild(label);
+      card.appendChild(hexLabel);
+
+      compContent.appendChild(card);
+      emptyHint.style.display = "none";
+
+      centerCard(card);
+      makeCardInteractive(card);
+      applyTextVisibilityToCard(card);
+
+      addSwatch({ type: "color", hex, label: role });
+    }
+
+    function createGradientCard(stops, gradType, role, cssGradient) {
+      const card = document.createElement("div");
+      card.classList.add("color-card");
+      card.classList.add(
+        role === "primaire" ? "card-lg" : role === "secondaire" ? "card-md" : "card-sm"
+      );
+      card.dataset.role = role;
+      card.dataset.shape = currentShape;
+      card.dataset.rotation = "0";
+      card.dataset.scale = "1";
+      card.dataset.opacity = currentOpacity.toString();
+      card.style.left = "50%";
+      card.style.top = "50%";
+      card.style.opacity = currentOpacity.toString();
+
+      card.dataset.gradientStops = JSON.stringify(stops);
+      card.dataset.gradientType = gradType;
+      card.dataset.gradientCss = cssGradient;
+      card.style.backgroundImage = cssGradient;
+      applyEffectToCard(card, currentEffect);
+      applyTextureToCard(card, currentTextureId);
+
+      const label = document.createElement("div");
+      label.classList.add("card-label");
+      label.textContent = "dégradé";
+
+      const hexLabel = document.createElement("div");
+      hexLabel.classList.add("card-hex");
+      hexLabel.textContent = stops.map((s) => s.color).join(" → ");
+
+      card.appendChild(label);
+      card.appendChild(hexLabel);
+
+      compContent.appendChild(card);
+      emptyHint.style.display = "none";
+
+      centerCard(card);
+      makeCardInteractive(card);
+      applyTextVisibilityToCard(card);
+
+      addSwatch({
+        type: "gradient",
+        stops,
+        gradType,
+        cssGradient,
+        label: "dégradé",
+      });
+    }
+
+    function centerCard(card) {
+      const compWidth = compContent.clientWidth;
+      const compHeight = compContent.clientHeight;
+      const rect = card.getBoundingClientRect();
+      const w = rect.width;
+      const h = rect.height;
+      const left = (compWidth - w) / 2;
+      const top = (compHeight - h) / 2;
+      card.style.left = left + "px";
+      card.style.top = top + "px";
+    }
+
+    // ----- drag + sélection + group -----
+    function makeCardInteractive(card) {
+      let isDragging = false;
+      let startX = 0;
+      let startY = 0;
+      let dragContext = null;
+      let moved = false;
+
+      function onMouseDown(e) {
+        if (e.button !== 0) return;
+        e.preventDefault();
+        isDragging = true;
+        moved = false;
+
+        const groupId = card.dataset.groupId;
+        const cardsToMove = groupId
+          ? Array.from(compContent.querySelectorAll(`.color-card[data-group-id="${groupId}"]`))
+          : [card];
+
+        dragContext = {
+          cards: cardsToMove,
+          initial: new Map(),
+        };
+        cardsToMove.forEach((c) => {
+          const left = parseFloat(c.style.left) || 0;
+          const top = parseFloat(c.style.top) || 0;
+          dragContext.initial.set(c, { left, top });
+        });
+
+        card.classList.add("dragging");
+        zIndexCounter++;
+        cardsToMove.forEach((c) => (c.style.zIndex = zIndexCounter.toString()));
+        startX = e.clientX;
+        startY = e.clientY;
+
+        document.addEventListener("mousemove", onMouseMove);
+        document.addEventListener("mouseup", onMouseUp);
+      }
+
+      function onMouseMove(e) {
+        if (!isDragging || !dragContext) return;
+        const dx = (e.clientX - startX) / currentZoom;
+        const dy = (e.clientY - startY) / currentZoom;
+        if (Math.abs(dx) > 2 || Math.abs(dy) > 2) moved = true;
+
+        const compWidth = compContent.clientWidth;
+        const compHeight = compContent.clientHeight;
+
+        dragContext.cards.forEach((c) => {
+          const base = dragContext.initial.get(c);
+          if (!base) return;
+          const rect = c.getBoundingClientRect();
+          const cardWidth = rect.width / currentZoom;
+          const cardHeight = rect.height / currentZoom;
+
+          let newLeft = base.left + dx;
+          let newTop = base.top + dy;
+
+          const margin = 40;
+          const maxLeft = compWidth - cardWidth + margin;
+          const maxTop = compHeight - cardHeight + margin;
+          newLeft = Math.min(Math.max(-margin, newLeft), maxLeft);
+          newTop = Math.min(Math.max(-margin, newTop), maxTop);
+
+          c.style.left = newLeft + "px";
+          c.style.top = newTop + "px";
+        });
+      }
+
+      function onMouseUp() {
+        isDragging = false;
+        card.classList.remove("dragging");
+        card.__dragMoved = moved;
+        dragContext = null;
+        document.removeEventListener("mousemove", onMouseMove);
+        document.removeEventListener("mouseup", onMouseUp);
+      }
+
+      function onClick(e) {
+        if (card.__dragMoved) {
+          card.__dragMoved = false;
+          return;
+        }
+        const multi = e.shiftKey || e.metaKey || e.ctrlKey;
+        toggleSelection(card, multi);
+        e.stopPropagation();
+      }
+
+      card.addEventListener("mousedown", onMouseDown);
+      card.addEventListener("click", onClick);
+
+      applyTransformFromDataset(card);
+    }
+
+    function toggleSelection(card, multi) {
+      if (!multi) {
+        if (!card.classList.contains("selected") || selectedCards.size > 1) {
+          clearSelection();
+        }
+      }
+      if (card.classList.contains("selected")) {
+        card.classList.remove("selected");
+        selectedCards.delete(card);
+      } else {
+        card.classList.add("selected");
+        selectedCards.add(card);
+      }
+      updateTransformControlsFromSelection();
+    }
+
+    function clearSelection() {
+      selectedCards.forEach((c) => c.classList.remove("selected"));
+      selectedCards.clear();
+      updateTransformControlsFromSelection();
+    }
+
+    function deleteSelected() {
+      if (selectedCards.size === 0) return;
+      selectedCards.forEach((c) => c.remove());
+      selectedCards.clear();
+      updateTransformControlsFromSelection();
+      if (!compContent.querySelector(".color-card, .note")) {
+        emptyHint.style.display = "flex";
+      }
+    }
+
+    deleteSelectedBtn.addEventListener("click", deleteSelected);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Delete" || e.key === "Backspace") deleteSelected();
+    });
+
+    // cliquer sur le fond = désélectionner
+    composition.addEventListener("mousedown", (e) => {
+      if (e.target === composition || e.target === compContent) {
+        clearSelection();
+      }
+    });
+
+    // group / ungroup
+    groupBtn.addEventListener("click", () => {
+      if (selectedCards.size < 2) return;
+      const id = "g" + groupCounter++;
+      selectedCards.forEach((c) => {
+        c.dataset.groupId = id;
+      });
+    });
+
+    ungroupBtn.addEventListener("click", () => {
+      selectedCards.forEach((c) => {
+        delete c.dataset.groupId;
+      });
+    });
+
+    // Transform sliders
+    function applyTransformFromDataset(card) {
+      const rot = parseFloat(card.dataset.rotation || "0");
+      const scale = parseFloat(card.dataset.scale || "1");
+      card.style.transform = `rotate(${rot}deg) scale(${scale})`;
+      const op = parseFloat(card.dataset.opacity || "1");
+      card.style.opacity = op.toString();
+    }
+
+    function updateTransformControlsFromSelection() {
+      if (selectedCards.size === 0) {
+        rotationInput.disabled = true;
+        scaleInput.disabled = true;
+        cardOpacityInput.disabled = true;
+        rotationInput.value = 0;
+        scaleInput.value = 100;
+        cardOpacityInput.value = 100;
+        return;
+      }
+      rotationInput.disabled = false;
+      scaleInput.disabled = false;
+      cardOpacityInput.disabled = false;
+
+      const first = selectedCards.values().next().value;
+      const rot = parseFloat(first.dataset.rotation || "0");
+      const scl = parseFloat(first.dataset.scale || "1");
+      const op = parseFloat(first.dataset.opacity || "1");
+      rotationInput.value = rot;
+      scaleInput.value = Math.round(scl * 100);
+      cardOpacityInput.value = Math.round(op * 100);
+    }
+
+    rotationInput.addEventListener("input", () => {
+      const value = parseFloat(rotationInput.value || "0");
+      selectedCards.forEach((card) => {
+        card.dataset.rotation = value.toString();
+        applyTransformFromDataset(card);
+      });
+    });
+
+    scaleInput.addEventListener("input", () => {
+      const value = parseFloat(scaleInput.value || "100");
+      const scl = value / 100;
+      selectedCards.forEach((card) => {
+        card.dataset.scale = scl.toString();
+        applyTransformFromDataset(card);
+      });
+    });
+
+    cardOpacityInput.addEventListener("input", () => {
+      const value = parseInt(cardOpacityInput.value, 10) / 100;
+      selectedCards.forEach((card) => {
+        card.dataset.opacity = value.toString();
+        applyTransformFromDataset(card);
+      });
+    });
+
+    // Effets
+    effectSelect.addEventListener("change", () => {
+      currentEffect = effectSelect.value;
+    });
+
+    applyEffectBtn.addEventListener("click", () => {
+      selectedCards.forEach((card) => {
+        applyEffectToCard(card, currentEffect);
+      });
+    });
+
+    // Boutons rôle -> création carte
+    roleButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const role = btn.dataset.role;
+        const hex = normalizeHex(hexInput.value);
+        if (!hex) {
+          alert("Entre un code hex valide (ex : #FF7A90).");
+          return;
+        }
+        createColorCard(hex, role);
+      });
+    });
+
+    // Afficher / masquer texte
+    function applyTextVisibilityToCard(card) {
+      const labels = card.querySelectorAll(".card-label, .card-hex");
+      labels.forEach((el) => {
+        el.style.display = showText ? "" : "none";
+      });
+    }
+
+    toggleTextCheckbox.addEventListener("change", () => {
+      showText = toggleTextCheckbox.checked;
+      const cards = compContent.querySelectorAll(".color-card");
+      cards.forEach(applyTextVisibilityToCard);
+    });
+
+    // copier HEX quand on clique sur le hashtag
+    compContent.addEventListener("click", async (e) => {
+      const hexEl = e.target.closest(".card-hex");
+      if (hexEl) {
+        const text = hexEl.textContent.trim();
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch {}
+      }
+    });
+
+    // Zoom
+    function updateZoom() {
+      compContent.style.transform = `scale(${currentZoom})`;
+      zoomLabel.textContent = Math.round(currentZoom * 100) + "%";
+    }
+    zoomOutBtn.addEventListener("click", () => {
+      currentZoom = Math.max(0.5, currentZoom - 0.1);
+      updateZoom();
+    });
+    zoomInBtn.addEventListener("click", () => {
+      currentZoom = Math.min(2.5, currentZoom + 0.1);
+      updateZoom();
+    });
+    updateZoom();
+
+    // Notes texte simples
+    addNoteBtn.addEventListener("click", () => {
+      const note = document.createElement("div");
+      note.classList.add("note");
+      note.contentEditable = "true";
+      note.textContent = "Note…";
+      note.style.left = "40px";
+      note.style.top = "40px";
+      compContent.appendChild(note);
+      emptyHint.style.display = "none";
+      makeNoteDraggable(note);
+    });
+
+    function makeNoteDraggable(note) {
+      let dragging = false;
+      let startX = 0, startY = 0;
+      let baseLeft = 0, baseTop = 0;
+      note.addEventListener("mousedown", (e) => {
+        if (e.button !== 0) return;
+        dragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        baseLeft = parseFloat(note.style.left) || 0;
+        baseTop = parseFloat(note.style.top) || 0;
+        document.addEventListener("mousemove", move);
+        document.addEventListener("mouseup", up);
+        e.stopPropagation();
+      });
+      function move(e) {
+        if (!dragging) return;
+        const dx = (e.clientX - startX) / currentZoom;
+        const dy = (e.clientY - startY) / currentZoom;
+        note.style.left = baseLeft + dx + "px";
+        note.style.top = baseTop + dy + "px";
+      }
+      function up() {
+        dragging = false;
+        document.removeEventListener("mousemove", move);
+        document.removeEventListener("mouseup", up);
+      }
+    }
+
+    // Reset
+    resetBtn.addEventListener("click", () => {
+      const nodes = compContent.querySelectorAll(".color-card, .note");
+      nodes.forEach((n) => n.remove());
+      paletteStrip.innerHTML = "";
+      emptyHint.style.display = "flex";
+      clearSelection();
+    });
+
+    // Export
+    exportBtn.addEventListener("click", () => {
+      const cards = Array.from(compContent.querySelectorAll(".color-card"));
+      if (cards.length === 0) {
+        alert("Ajoute au moins une carte avant d'exporter 🙂");
+        return;
+      }
+      const compWidth = compContent.clientWidth;
+      const compHeight = compContent.clientHeight;
+      const scale = 2;
+      const canvas = document.createElement("canvas");
+      canvas.width = compWidth * scale;
+      canvas.height = compHeight * scale;
+      const ctx = canvas.getContext("2d");
+
+      const bgMode = exportBgSelect.value;
+
+      if (bgMode === "white") {
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      } else if (bgMode === "grid") {
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = "rgba(0,0,0,0.08)";
+        ctx.lineWidth = 1;
+        const gridSize = 40 * scale;
+        for (let x = 0; x < canvas.width; x += gridSize) {
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, canvas.height);
+          ctx.stroke();
+        }
+        for (let y = 0; y < canvas.height; y += gridSize) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(canvas.width, y);
+          ctx.stroke();
+        }
+      } // transparent: rien
+
+      cards.sort((a, b) => {
+        const za = parseInt(a.style.zIndex || "1", 10);
+        const zb = parseInt(b.style.zIndex || "1", 10);
+        return za - zb;
+      });
+
+      function drawCardShape(ctx, card) {
+        const left = parseFloat(card.style.left) || 0;
+        const top = parseFloat(card.style.top) || 0;
+        const w = card.offsetWidth;
+        const h = card.offsetHeight;
+        const shape = card.dataset.shape || "rounded";
+        const rot = parseFloat(card.dataset.rotation || "0");
+        const scl = parseFloat(card.dataset.scale || "1");
+        const op = parseFloat(card.dataset.opacity || "1");
+        const gradientType = card.dataset.gradientType;
+        const stopsStr = card.dataset.gradientStops;
+        let hex = card.dataset.hex || "#FFFFFF";
+
+        ctx.save();
+        ctx.scale(scale, scale);
+        ctx.translate(left + w / 2, top + h / 2);
+        ctx.rotate((rot * Math.PI) / 180);
+        ctx.scale(scl, scl);
+        ctx.globalAlpha = op;
+
+        const drawX = -w / 2;
+        const drawY = -h / 2;
+
+        let gradient = null;
+        if (stopsStr) {
+          let stops;
+          try {
+            stops = JSON.parse(stopsStr);
+          } catch {
+            stops = null;
+          }
+          if (stops && stops.length > 0) {
+            const type = gradientType || "linear-h";
+            if (type === "radial") {
+              gradient = ctx.createRadialGradient(
+                drawX + w / 2, drawY + h / 2, 0,
+                drawX + w / 2, drawY + h / 2, Math.max(w, h) / 2
+              );
+            } else {
+              let x0 = drawX, y0 = drawY, x1 = drawX + w, y1 = drawY;
+              if (type === "linear-v") { x1 = drawX; y1 = drawY + h; }
+              if (type === "linear-d") { x1 = drawX + w; y1 = drawY + h; }
+              gradient = ctx.createLinearGradient(x0, y0, x1, y1);
+            }
+            stops.forEach((s) => {
+              const c = normalizeHex(s.color) || hex;
+              const pos = (s.pos || 0) / 100;
+              gradient.addColorStop(pos, c);
+            });
+          }
+        }
+
+        ctx.beginPath();
+        if (shape === "circle") {
+          const r = Math.min(w, h) / 2;
+          ctx.arc(drawX + w / 2, drawY + h / 2, r, 0, Math.PI * 2);
+        } else if (shape === "triangle") {
+          ctx.moveTo(drawX + w / 2, drawY);
+          ctx.lineTo(drawX, drawY + h);
+          ctx.lineTo(drawX + w, drawY + h);
+          ctx.closePath();
+        } else if (shape === "rounded") {
+          const radius = 18;
+          const r = Math.min(radius, w / 2, h / 2);
+          ctx.moveTo(drawX + r, drawY);
+          ctx.lineTo(drawX + w - r, drawY);
+          ctx.quadraticCurveTo(drawX + w, drawY, drawX + w, drawY + r);
+          ctx.lineTo(drawX + w, drawY + h - r);
+          ctx.quadraticCurveTo(drawX + w, drawY + h, drawX + w - r, drawY + h);
+          ctx.lineTo(drawX + r, drawY + h);
+          ctx.quadraticCurveTo(drawX, drawY + h, drawX, drawY + h - r);
+          ctx.lineTo(drawX, drawY + r);
+          ctx.quadraticCurveTo(drawX, drawY, drawX + r, drawY);
+        } else {
+          ctx.rect(drawX, drawY, w, h);
+        }
+
+        ctx.fillStyle = gradient || hex;
+        ctx.fill();
+
+        if (showText) {
+          ctx.fillStyle = "rgba(0,0,0,0.7)";
+          ctx.font = "9px system-ui";
+          ctx.textAlign = "center";
+          const labelText = card.dataset.gradientStops
+            ? "dégradé"
+            : (card.dataset.hex || "");
+          ctx.fillText(labelText, 0, drawY + h / 2 - 6);
+        }
+
+        ctx.restore();
+      }
+
+      cards.forEach((card) => drawCardShape(ctx, card));
+
+      const type = exportTypeSelect.value;
+      let mime = "image/png";
+      if (type === "jpeg") mime = "image/jpeg";
+      const dataUrl = canvas.toDataURL(mime, 1.0);
+      const link = document.createElement("a");
+      link.href = dataUrl;
+      link.download = `composition-couleurs.${type}`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+  </script>
+</body>
+</html>
