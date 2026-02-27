@@ -18,7 +18,9 @@
       --radius-md: 10px;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -45,6 +47,7 @@
       margin: 16px auto;
       height: calc(100vh - 32px);
     }
+
     @media (max-width: 900px) {
       .app {
         grid-template-columns: 1fr;
@@ -69,6 +72,7 @@
       justify-content: space-between;
       gap: 8px;
     }
+
     .panel-title {
       font-size: 16px;
       font-weight: 600;
@@ -76,6 +80,7 @@
       text-transform: uppercase;
       color: var(--muted);
     }
+
     .pill {
       font-size: 11px;
       padding: 4px 9px;
@@ -95,17 +100,18 @@
       background: #fafaf7;
       border: 1px dashed var(--border);
     }
+
     .picker-main {
       display: flex;
       align-items: center;
       gap: 14px;
     }
 
-    /* ---- roue + zone S/L ---- */
+    /* Roue chromatique custom (interactive) */
     .color-wheel-wrap {
       position: relative;
-      width: 110px;
-      height: 110px;
+      width: 90px;
+      height: 90px;
       border-radius: 50%;
       background:
         conic-gradient(
@@ -123,48 +129,13 @@
       align-items: center;
       justify-content: center;
     }
+
     .color-wheel-inner {
       position: absolute;
       inset: 18px;
       border-radius: 50%;
-      background: transparent;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    /* carré S/L à l’intérieur, façon Illustrator */
-    .sl-area {
-      position: relative;
-      width: 70px;
-      height: 70px;
-      border-radius: 4px;
-      overflow: hidden;
-      cursor: crosshair;
-    }
-    .sl-area::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to right, #fff, transparent);
-      mix-blend-mode: normal;
-    }
-    .sl-area::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, #000, transparent);
-      mix-blend-mode: multiply;
-    }
-    .sl-indicator {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      border: 2px solid #fff;
-      box-shadow: 0 0 0 1px rgba(0,0,0,0.5);
-      transform: translate(-50%, -50%);
-      pointer-events: none;
+      background: var(--paper);
+      border: 1px solid #d0d0c8;
     }
 
     .color-wheel-indicator {
@@ -185,6 +156,7 @@
       flex-direction: column;
       gap: 6px;
     }
+
     .field-label {
       font-size: 11px;
       text-transform: uppercase;
@@ -197,6 +169,7 @@
       align-items: center;
       gap: 6px;
     }
+
     .hex-prefix {
       padding: 6px 8px;
       border-radius: 999px;
@@ -205,6 +178,7 @@
       font-size: 12px;
       color: var(--muted);
     }
+
     .hex-input {
       flex: 1;
       padding: 6px 8px;
@@ -215,7 +189,10 @@
       font-size: 13px;
       outline: none;
     }
-    .hex-input:focus { border-color: var(--accent); }
+
+    .hex-input:focus {
+      border-color: var(--accent);
+    }
 
     .color-info {
       display: flex;
@@ -223,17 +200,6 @@
       gap: 2px;
       font-size: 11px;
       color: var(--muted);
-    }
-
-    .opacity-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      color: var(--muted);
-    }
-    .opacity-row input[type="range"] {
-      flex: 1;
     }
 
     .role-buttons {
@@ -259,6 +225,7 @@
       transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
       white-space: nowrap;
     }
+
     .btn span.dot {
       width: 8px;
       height: 8px;
@@ -266,28 +233,38 @@
       background: var(--muted);
       opacity: 0.7;
     }
+
     .btn-primary-role {
       border-color: var(--accent);
       color: var(--accent);
       background: #fff5f7;
     }
+
     .btn:hover {
       border-color: #b0b0aa;
       color: var(--text);
       background: #f9f9f4;
     }
-    .btn-primary-role span.dot { background: var(--accent); }
-    .secondary-dot { background: #7acbff !important; }
-    .tertiary-dot { background: #c5bf3a !important; }
 
-    .btn-small { font-size: 10px; padding: 4px 8px; }
+    .btn-primary-role span.dot {
+      background: var(--accent);
+    }
 
-    /* formes */
+    .secondary-dot {
+      background: #7acbff !important;
+    }
+
+    .tertiary-dot {
+      background: #c5bf3a !important;
+    }
+
+    /* Formes */
     .shape-buttons {
       display: flex;
       gap: 6px;
       flex-wrap: wrap;
     }
+
     .shape-btn {
       border-radius: 999px;
       border: 1px solid var(--border);
@@ -300,14 +277,22 @@
       font-size: 11px;
       color: var(--muted);
     }
+
     .shape-btn-icon {
       width: 14px;
       height: 14px;
       border: 1px solid #b8b8b0;
       background: #f7f7f3;
     }
-    .shape-btn-icon.rounded { border-radius: 4px; }
-    .shape-btn-icon.circle { border-radius: 50%; }
+
+    .shape-btn-icon.rounded {
+      border-radius: 4px;
+    }
+
+    .shape-btn-icon.circle {
+      border-radius: 50%;
+    }
+
     .shape-btn-icon.triangle {
       width: 0;
       height: 0;
@@ -315,32 +300,17 @@
       border-right: 7px solid transparent;
       border-bottom: 12px solid #b8b8b0;
       background: transparent;
+      border-radius: 0;
     }
+
     .shape-btn.active {
       border-color: var(--accent);
       background: #fff5f7;
       color: var(--accent);
     }
 
-    /* effets */
-    .effects-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-      font-size: 11px;
-      color: var(--muted);
-    }
-    .effects-row select {
-      padding: 4px 6px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: #ffffff;
-      font-size: 11px;
-      color: var(--muted);
-    }
+    /* Dégradés */
 
-    /* dégradés */
     .gradient-block {
       display: flex;
       flex-direction: column;
@@ -350,27 +320,35 @@
       background: #fafaf7;
       border: 1px dashed var(--border);
     }
-    .gradient-top-row {
+
+    .gradient-row {
       display: flex;
       align-items: center;
-      justify-content: space-between;
       gap: 6px;
     }
-    .grad-preview {
+
+    .gradient-row input {
       flex: 1;
-      height: 18px;
+      padding: 6px 8px;
       border-radius: 999px;
       border: 1px solid var(--border);
       background: #ffffff;
+      font-size: 12px;
     }
+
+    .gradient-row span.arrow {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
     .gradient-options {
       display: flex;
       gap: 6px;
       margin-top: 4px;
       align-items: center;
       flex-wrap: wrap;
-      font-size: 11px;
     }
+
     .gradient-options select {
       padding: 4px 6px;
       border-radius: 999px;
@@ -379,40 +357,18 @@
       background: #ffffff;
       color: var(--muted);
     }
+
+    .gradient-options select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
     .gradient-size-select {
       padding: 4px 6px;
       border-radius: 999px;
       border: 1px solid var(--border);
       font-size: 11px;
       background: #ffffff;
-      color: var(--muted);
-    }
-    .grad-colors {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      margin-top: 4px;
-    }
-    .grad-color-row {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 11px;
-    }
-    .grad-color-row input[type="text"] {
-      width: 80px;
-      padding: 4px 6px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: #ffffff;
-      font-size: 11px;
-    }
-    .grad-color-row input[type="range"] {
-      flex: 1;
-    }
-    .grad-color-row span {
-      width: 26px;
-      text-align: right;
       color: var(--muted);
     }
 
@@ -424,14 +380,18 @@
       scrollbar-width: thin;
       scrollbar-color: #c3c3bc transparent;
     }
-    .palette-strip::-webkit-scrollbar { height: 6px; }
+
+    .palette-strip::-webkit-scrollbar {
+      height: 6px;
+    }
     .palette-strip::-webkit-scrollbar-thumb {
       background: #c3c3bc;
       border-radius: 999px;
     }
+
     .swatch-chip {
       min-width: 70px;
-      max-width: 100px;
+      max-width: 90px;
       background: #ffffff;
       border-radius: 999px;
       border: 1px solid var(--border);
@@ -442,20 +402,26 @@
       font-size: 11px;
       color: var(--muted);
       flex-shrink: 0;
-      cursor: pointer;
     }
+
     .swatch-chip-color {
       width: 18px;
       height: 18px;
       border-radius: 999px;
       border: 1px solid rgba(0, 0, 0, 0.15);
     }
+
     .swatch-chip-text {
       display: flex;
       flex-direction: column;
       gap: 1px;
     }
-    .swatch-chip-hex { font-size: 11px; color: var(--text); }
+
+    .swatch-chip-hex {
+      font-size: 11px;
+      color: var(--text);
+    }
+
     .swatch-chip-role {
       font-size: 9px;
       text-transform: uppercase;
@@ -469,6 +435,7 @@
       margin-top: 4px;
       flex-wrap: wrap;
     }
+
     .btn-outline {
       background: transparent;
       border-style: dashed;
@@ -481,11 +448,13 @@
       border-radius: 999px;
       cursor: pointer;
     }
+
     .btn-outline:hover {
       border-color: #b0b0aa;
       color: var(--text);
       background: #f9f9f4;
     }
+
     .btn-accent {
       background: var(--accent);
       border-color: var(--accent);
@@ -493,21 +462,32 @@
       font-weight: 600;
       padding-inline: 12px;
     }
-    .btn-accent:hover { filter: brightness(1.05); }
 
-    /* workspace */
+    .btn-accent:hover {
+      filter: brightness(1.05);
+    }
+
+    .btn-small {
+      font-size: 10px;
+      padding: 4px 8px;
+    }
+
+    /* Workspace / composition */
+
     .workspace {
       position: relative;
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
+
     .workspace-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 4px 2px;
     }
+
     .workspace-title {
       font-size: 14px;
       font-weight: 600;
@@ -515,10 +495,12 @@
       text-transform: uppercase;
       color: var(--muted);
     }
+
     .workspace-sub {
       font-size: 11px;
       color: var(--muted);
     }
+
     .zoom-controls {
       display: flex;
       align-items: center;
@@ -526,6 +508,7 @@
       font-size: 11px;
       color: var(--muted);
     }
+
     .zoom-btn {
       width: 22px;
       height: 22px;
@@ -539,7 +522,10 @@
       font-size: 13px;
       padding: 0;
     }
-    .zoom-btn:hover { background: #f7f7f2; }
+
+    .zoom-btn:hover {
+      background: #f7f7f2;
+    }
 
     .composition {
       position: relative;
@@ -549,16 +535,19 @@
       background: #ffffff;
       border: 1px solid var(--border);
       overflow: hidden;
+      padding: 0;
+      display: flex;
     }
+
     .comp-content {
-      position: absolute;
-      inset: 0;
+      position: relative;
+      width: 100%;
+      height: 100%;
       transform-origin: top left;
       background-image:
         linear-gradient(to right, var(--line) 1px, transparent 1px),
         linear-gradient(to bottom, var(--line) 1px, transparent 1px);
       background-size: 40px 40px;
-      background-repeat: repeat;
     }
 
     .color-card {
@@ -574,20 +563,31 @@
       box-sizing: border-box;
       color: #000;
       background-clip: padding-box;
-      box-shadow: none; /* 2D */
+      /* 2D : PAS d'ombre */
+      box-shadow: none;
     }
-    .color-card.dragging { cursor: grabbing; }
 
+    .color-card.dragging {
+      cursor: grabbing;
+    }
+
+    .color-card[data-role="primaire"] {}
+    .color-card[data-role="secondaire"] {}
+    .color-card[data-role="tertiaire"] {}
+
+    /* Tailles de base par rôle */
     .card-lg {
       width: 200px;
       height: 150px;
       font-size: 13px;
     }
+
     .card-md {
       width: 140px;
       height: 100px;
       font-size: 11px;
     }
+
     .card-sm {
       width: 90px;
       height: 70px;
@@ -595,25 +595,47 @@
       padding: 6px 8px;
     }
 
-    /* formes */
-    .color-card[data-shape="rect"] { border-radius: 4px; }
-    .color-card[data-shape="rounded"] { border-radius: 18px; }
-    .color-card[data-shape="square"] { border-radius: 4px; }
+    /* Formes par data-shape */
+
+    .color-card[data-shape="rect"] {
+      border-radius: 4px;
+    }
+
+    .color-card[data-shape="rounded"] {
+      border-radius: 18px;
+    }
+
+    .color-card[data-shape="square"] {
+      border-radius: 4px;
+    }
+
     .card-lg[data-shape="square"],
     .card-lg[data-shape="circle"],
-    .card-lg[data-shape="triangle"] { width: 150px; height: 150px; }
+    .card-lg[data-shape="triangle"] {
+      width: 150px;
+      height: 150px;
+    }
+
     .card-md[data-shape="square"],
     .card-md[data-shape="circle"],
-    .card-md[data-shape="triangle"] { width: 110px; height: 110px; }
+    .card-md[data-shape="triangle"] {
+      width: 110px;
+      height: 110px;
+    }
+
     .card-sm[data-shape="square"],
     .card-sm[data-shape="circle"],
-    .card-sm[data-shape="triangle"] { width: 70px; height: 70px; }
+    .card-sm[data-shape="triangle"] {
+      width: 70px;
+      height: 70px;
+    }
 
     .color-card[data-shape="circle"] {
       border-radius: 50%;
       text-align: center;
       align-items: center;
     }
+
     .color-card[data-shape="triangle"] {
       clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
       align-items: center;
@@ -630,6 +652,7 @@
       letter-spacing: 0.09em;
       align-self: flex-start;
     }
+
     .card-hex {
       background: rgba(0, 0, 0, 0.45);
       color: #fff;
@@ -637,12 +660,13 @@
       padding: 3px 7px;
       font-size: 10px;
       max-width: 100%;
-      cursor: pointer;
     }
+
     .card-sm .card-label {
       font-size: 8px;
       padding-inline: 5px;
     }
+
     .card-sm .card-hex {
       font-size: 9px;
       padding: 2px 6px;
@@ -665,6 +689,7 @@
       pointer-events: none;
       padding: 0 18px;
     }
+
     .empty-hint span {
       background: rgba(255, 255, 255, 0.9);
       padding: 8px 12px;
@@ -681,6 +706,16 @@
       color: var(--muted);
     }
 
+    .controls-row label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .controls-row input[type="checkbox"] {
+      cursor: pointer;
+    }
+
     .transform-controls {
       display: flex;
       flex-direction: column;
@@ -691,78 +726,26 @@
       font-size: 11px;
       color: var(--muted);
     }
+
     .transform-row {
       display: flex;
       align-items: center;
       gap: 4px;
     }
-    .transform-row span { width: 60px; }
-    .transform-row input[type="range"] { flex: 1; }
 
-    /* effets CSS */
-    .color-card.effect-blur {
-      filter: blur(2px);
-    }
-    .color-card.effect-translucent {
-      backdrop-filter: blur(4px);
-    }
-    .color-card.effect-grain::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background-image: radial-gradient(circle, rgba(0,0,0,0.18) 1px, transparent 1px);
-      background-size: 3px 3px;
-      mix-blend-mode: multiply;
-      opacity: 0.4;
-      border-radius: inherit;
+    .transform-row span {
+      width: 60px;
     }
 
-    /* notes texte */
-    .note {
-      position: absolute;
-      min-width: 120px;
-      min-height: 60px;
-      padding: 6px 8px;
-      background: #fffbd1;
-      border-radius: 6px;
-      border: 1px solid #e0d68a;
-      font-size: 11px;
-      color: #4b4b2a;
-      cursor: move;
-    }
-    .note[contenteditable="true"]:focus {
-      outline: 1px dashed #c1b86d;
-    }
-
-    /* textures */
-    .textures-strip {
-      display: flex;
-      gap: 6px;
-      margin-top: 4px;
-      overflow-x: auto;
-      padding-bottom: 2px;
-    }
-    .texture-chip {
-      width: 28px;
-      height: 28px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      background-size: cover;
-      background-position: center;
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-    .texture-chip.active {
-      outline: 2px solid var(--accent);
-      outline-offset: 1px;
+    .transform-row input[type="range"] {
+      flex: 1;
     }
 
   </style>
 </head>
 <body>
   <div class="app">
-    <!-- Panneau de gauche -->
+    <!-- Panneau de gauche : outils -->
     <aside class="panel">
       <div class="panel-header">
         <div class="panel-title">Palette perso</div>
@@ -773,11 +756,7 @@
       <div class="picker-row">
         <div class="picker-main">
           <div class="color-wheel-wrap" id="colorWheel">
-            <div class="color-wheel-inner">
-              <div class="sl-area" id="slArea">
-                <div class="sl-indicator" id="slIndicator"></div>
-              </div>
-            </div>
+            <div class="color-wheel-inner"></div>
             <div class="color-wheel-indicator" id="wheelIndicator"></div>
           </div>
 
@@ -785,16 +764,16 @@
             <div class="field-label">Couleur actuelle</div>
             <div class="hex-row">
               <div class="hex-prefix">HEX</div>
-              <input id="hexInput" class="hex-input" value="#ff7a90" spellcheck="false" />
+              <input
+                id="hexInput"
+                class="hex-input"
+                value="#ff7a90"
+                spellcheck="false"
+              />
             </div>
             <div class="color-info">
               <div id="rgbInfo">RGB : 255, 122, 144</div>
               <div id="hslInfo">HSL : 350°, 100%, 74%</div>
-              <div id="opacityInfo">Opacité : 100%</div>
-            </div>
-            <div class="opacity-row">
-              <span>Opacité</span>
-              <input type="range" id="opacityInput" min="10" max="100" value="100" />
             </div>
           </div>
         </div>
@@ -809,7 +788,6 @@
           <button class="btn" data-role="tertiaire">
             <span class="dot tertiary-dot"></span> Tertiaire
           </button>
-          <button class="btn btn-small" id="complementaryBtn">Complémentaire</button>
         </div>
       </div>
 
@@ -835,29 +813,14 @@
         </div>
       </div>
 
-      <!-- Effets -->
-      <div class="effects-row">
-        <span>Effet</span>
-        <select id="effectSelect">
-          <option value="none">Aucun</option>
-          <option value="blur">Flou</option>
-          <option value="translucent">Translucide</option>
-          <option value="grain">Granuleux</option>
-        </select>
-        <button class="btn btn-small" id="applyEffectBtn">Appliquer à la sélection</button>
-      </div>
-
-      <!-- Dégradés multi-couleurs -->
+      <!-- Dégradés -->
       <div class="gradient-block">
-        <div class="gradient-top-row">
-          <div class="field-label">Carte dégradé</div>
-          <div class="grad-preview" id="gradPreview"></div>
+        <div class="field-label">Carte dégradé</div>
+        <div class="gradient-row">
+          <input id="gradStart" placeholder="#ff7a90" value="#ff7a90" />
+          <span class="arrow">→</span>
+          <input id="gradEnd" placeholder="#ffffff" value="#ffffff" />
         </div>
-        <div class="grad-colors" id="gradColorsContainer">
-          <!-- lignes de couleurs générées en JS -->
-        </div>
-        <button class="btn btn-small" id="addGradColorBtn">+ Ajouter une couleur (max 5)</button>
-
         <div class="gradient-options">
           <select id="gradType">
             <option value="linear-h">Linéaire horizontal</option>
@@ -874,26 +837,17 @@
         </div>
       </div>
 
-      <!-- Matières -->
-      <div>
-        <div class="field-label">Matières (textures)</div>
-        <input type="file" id="textureUpload" accept="image/*" multiple />
-        <div class="textures-strip" id="texturesStrip">
-          <!-- textures preview -->
-        </div>
+      <div class="field-label">Couleurs ajoutées</div>
+      <div class="palette-strip" id="paletteStrip">
+        <!-- Swatches ajoutés dynamiquement -->
       </div>
 
-      <div class="field-label">Historique des couleurs</div>
-      <div class="palette-strip" id="paletteStrip"></div>
-
-      <!-- Textes / suppression / group -->
+      <!-- Contrôles texte + suppression -->
       <div class="controls-row">
         <label>
           <input type="checkbox" id="toggleText" checked />
-          Afficher le texte
+          Afficher le texte sur les cartes
         </label>
-        <button class="btn btn-small" id="groupBtn">Grouper</button>
-        <button class="btn btn-small" id="ungroupBtn">Dégrouper</button>
         <button class="btn btn-small" id="deleteSelectedBtn">Supprimer sélection</button>
       </div>
 
@@ -908,31 +862,12 @@
           <span>Taille</span>
           <input type="range" id="scaleInput" min="50" max="200" value="100" disabled />
         </div>
-        <div class="transform-row">
-          <span>Opacité</span>
-          <input type="range" id="cardOpacityInput" min="10" max="100" value="100" disabled />
-        </div>
-        <button class="btn btn-small" id="addNoteBtn">+ Ajouter une note</button>
-        <div style="font-size:10px;">Astuce : clic pour sélectionner, Maj+clic = multi-sélection. Suppr = effacer.</div>
-      </div>
-
-      <!-- Export -->
-      <div class="controls-row">
-        <span>Export :</span>
-        <select id="exportBgSelect">
-          <option value="transparent">Fond transparent</option>
-          <option value="grid">Avec grille</option>
-          <option value="white">Fond blanc</option>
-        </select>
-        <select id="exportTypeSelect">
-          <option value="png">PNG</option>
-          <option value="jpeg">JPEG</option>
-        </select>
+        <div style="font-size:10px;">Astuce : clic pour sélectionner, Maj+clic pour multi-sélection. Touche Suppr = effacer.</div>
       </div>
 
       <div class="panel-footer">
         <button class="btn-outline" id="resetBtn">Tout effacer</button>
-        <button class="btn btn-accent" id="exportBtn">Exporter</button>
+        <button class="btn btn-accent" id="exportBtn">Exporter PNG (fond transparent)</button>
       </div>
     </aside>
 
@@ -953,7 +888,9 @@
       </div>
 
       <div class="composition" id="composition">
-        <div class="comp-content" id="compContent"></div>
+        <div class="comp-content" id="compContent">
+          <!-- quadrillage via background -->
+        </div>
         <div class="empty-hint" id="emptyHint">
           <span>Ajoute des cartes (couleurs ou dégradés) puis organise-les ici 📐</span>
         </div>
@@ -962,16 +899,11 @@
   </div>
 
   <script>
-    // ----- DOM refs -----
+    // --- Références DOM ---
     const hexInput = document.getElementById("hexInput");
     const rgbInfo = document.getElementById("rgbInfo");
     const hslInfo = document.getElementById("hslInfo");
-    const opacityInfo = document.getElementById("opacityInfo");
-    const opacityInput = document.getElementById("opacityInput");
-
-    const roleButtons = document.querySelectorAll(".role-buttons .btn[data-role]");
-    const complementaryBtn = document.getElementById("complementaryBtn");
-
+    const roleButtons = document.querySelectorAll(".role-buttons .btn");
     const composition = document.getElementById("composition");
     const compContent = document.getElementById("compContent");
     const emptyHint = document.getElementById("emptyHint");
@@ -982,67 +914,40 @@
     const deleteSelectedBtn = document.getElementById("deleteSelectedBtn");
     const rotationInput = document.getElementById("rotationInput");
     const scaleInput = document.getElementById("scaleInput");
-    const cardOpacityInput = document.getElementById("cardOpacityInput");
     const zoomOutBtn = document.getElementById("zoomOutBtn");
     const zoomInBtn = document.getElementById("zoomInBtn");
     const zoomLabel = document.getElementById("zoomLabel");
     const shapeButtons = document.querySelectorAll(".shape-btn");
-    const effectSelect = document.getElementById("effectSelect");
-    const applyEffectBtn = document.getElementById("applyEffectBtn");
-    const groupBtn = document.getElementById("groupBtn");
-    const ungroupBtn = document.getElementById("ungroupBtn");
-    const addNoteBtn = document.getElementById("addNoteBtn");
-    const exportBgSelect = document.getElementById("exportBgSelect");
-    const exportTypeSelect = document.getElementById("exportTypeSelect");
-
     const colorWheel = document.getElementById("colorWheel");
     const wheelIndicator = document.getElementById("wheelIndicator");
-    const slArea = document.getElementById("slArea");
-    const slIndicator = document.getElementById("slIndicator");
 
-    const gradPreview = document.getElementById("gradPreview");
-    const gradColorsContainer = document.getElementById("gradColorsContainer");
-    const addGradColorBtn = document.getElementById("addGradColorBtn");
+    const gradStartInput = document.getElementById("gradStart");
+    const gradEndInput = document.getElementById("gradEnd");
     const gradTypeSelect = document.getElementById("gradType");
     const gradSizeSelect = document.getElementById("gradSize");
     const addGradientBtn = document.getElementById("addGradientBtn");
-
-    const textureUpload = document.getElementById("textureUpload");
-    const texturesStrip = document.getElementById("texturesStrip");
 
     let zIndexCounter = 1;
     let showText = true;
     let currentShape = "rounded";
     let currentZoom = 1;
     let wheelDragging = false;
-    let slDragging = false;
     let currentH = 350;
     let currentS = 100;
     let currentL = 60;
-    let currentOpacity = 1;
-    let currentEffect = "none";
-    let groupCounter = 1;
-    let textures = [];
-    let currentTextureId = null;
+
     const selectedCards = new Set();
 
-    // Gradient state
-    let gradientStops = [
-      { id: 1, color: "#ff7a90", pos: 0 },
-      { id: 2, color: "#ffffff", pos: 100 },
-    ];
-    let nextGradId = 3;
-
-    // ----- Color utils -----
+    // --- Utilitaires couleurs ---
     function normalizeHex(value) {
       if (!value) return null;
       let v = value.trim().toLowerCase();
       if (!v.startsWith("#")) v = "#" + v;
-      const short = /^#([0-9a-f]{3})$/i.exec(v);
-      if (short) {
-        const r = short[1][0];
-        const g = short[1][1];
-        const b = short[1][2];
+      const shortMatch = /^#([0-9a-f]{3})$/i.exec(v);
+      if (shortMatch) {
+        const r = shortMatch[1][0];
+        const g = shortMatch[1][1];
+        const b = shortMatch[1][2];
         v = "#" + r + r + g + g + b + b;
       }
       const hexRegex = /^#([0-9a-f]{6})$/i;
@@ -1066,14 +971,17 @@
         [r, g, b]
           .map((x) => {
             const v = Math.max(0, Math.min(255, Math.round(x)));
-            return v.toString(16).padStart(2, "0");
+            const s = v.toString(16).padStart(2, "0");
+            return s;
           })
           .join("")
       ).toUpperCase();
     }
 
     function rgbToHsl(r, g, b) {
-      r /= 255; g /= 255; b /= 255;
+      r /= 255;
+      g /= 255;
+      b /= 255;
       const max = Math.max(r, g, b);
       const min = Math.min(r, g, b);
       let h, s;
@@ -1084,9 +992,15 @@
         const d = max - min;
         s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
         switch (max) {
-          case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-          case g: h = (b - r) / d + 2; break;
-          case b: h = (r - g) / d + 4; break;
+          case r:
+            h = (g - b) / d + (g < b ? 6 : 0);
+            break;
+          case g:
+            h = (b - r) / d + 2;
+            break;
+          case b:
+            h = (r - g) / d + 4;
+            break;
         }
         h /= 6;
       }
@@ -1105,21 +1019,23 @@
       const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
       const m = l - c / 2;
       let r1, g1, b1;
-      if (h < 60) { r1 = c; g1 = x; b1 = 0; }
-      else if (h < 120) { r1 = x; g1 = c; b1 = 0; }
-      else if (h < 180) { r1 = 0; g1 = c; b1 = x; }
-      else if (h < 240) { r1 = 0; g1 = x; b1 = c; }
-      else if (h < 300) { r1 = x; g1 = 0; b1 = c; }
-      else { r1 = c; g1 = 0; b1 = x; }
+      if (h < 60) {
+        r1 = c; g1 = x; b1 = 0;
+      } else if (h < 120) {
+        r1 = x; g1 = c; b1 = 0;
+      } else if (h < 180) {
+        r1 = 0; g1 = c; b1 = x;
+      } else if (h < 240) {
+        r1 = 0; g1 = x; b1 = c;
+      } else if (h < 300) {
+        r1 = x; g1 = 0; b1 = c;
+      } else {
+        r1 = c; g1 = 0; b1 = x;
+      }
       const r = (r1 + m) * 255;
       const g = (g1 + m) * 255;
       const b = (b1 + m) * 255;
       return rgbToHex(r, g, b);
-    }
-
-    function updateSLBackground() {
-      const baseHex = hslToHex(currentH, 100, 50);
-      slArea.style.background = `linear-gradient(to right, #fff, ${baseHex})`;
     }
 
     function setCurrentColorFromHex(hex) {
@@ -1133,17 +1049,15 @@
         currentS = hsl.s;
         currentL = hsl.l;
         updateWheelIndicator();
-        updateSLIndicatorFromHSL();
-        updateSLBackground();
         rgbInfo.textContent = `RGB : ${rgb.r}, ${rgb.g}, ${rgb.b}`;
         hslInfo.textContent = `HSL : ${hsl.h}°, ${hsl.s}%, ${hsl.l}%`;
       }
     }
 
     function updateWheelIndicator() {
-      const rect = colorWheel.getBoundingClientRect();
-      const radius = rect.width / 2;
-      const innerRadius = radius - 4;
+      const wheelRect = colorWheel.getBoundingClientRect();
+      const radius = wheelRect.width / 2;
+      const innerRadius = radius - 18;
       const angleRad = (currentH - 90) * (Math.PI / 180);
       const cx = radius;
       const cy = radius;
@@ -1151,37 +1065,7 @@
       const y = cy + innerRadius * Math.sin(angleRad);
       wheelIndicator.style.left = `${x}px`;
       wheelIndicator.style.top = `${y}px`;
-      wheelIndicator.style.background = hslToHex(currentH, 100, 50);
-    }
-
-    function updateSLIndicatorFromHSL() {
-      const rect = slArea.getBoundingClientRect();
-      const x = (currentS / 100) * rect.width;
-      const y = (1 - currentL / 100) * rect.height;
-      slIndicator.style.left = `${x}px`;
-      slIndicator.style.top = `${y}px`;
-    }
-
-    function updateFromSLMouse(e) {
-      const rect = slArea.getBoundingClientRect();
-      let x = e.clientX - rect.left;
-      let y = e.clientY - rect.top;
-      x = Math.max(0, Math.min(rect.width, x));
-      y = Math.max(0, Math.min(rect.height, y));
-      const s = (x / rect.width) * 100;
-      const l = (1 - y / rect.height) * 100;
-      currentS = Math.max(0, Math.min(100, s));
-      currentL = Math.max(0, Math.min(100, l));
-      slIndicator.style.left = `${x}px`;
-      slIndicator.style.top = `${y}px`;
-      const hex = hslToHex(currentH, currentS, currentL);
-      const rgb = hexToRgb(hex);
-      hexInput.value = hex;
-      if (rgb) {
-        const hsl = { h: currentH, s: Math.round(currentS), l: Math.round(currentL) };
-        rgbInfo.textContent = `RGB : ${rgb.r}, ${rgb.g}, ${rgb.b}`;
-        hslInfo.textContent = `HSL : ${hsl.h}°, ${hsl.s}%, ${hsl.l}%`;
-      }
+      wheelIndicator.style.background = hslToHex(currentH, currentS, currentL);
     }
 
     function handleWheelEvent(e) {
@@ -1190,43 +1074,33 @@
       const cy = rect.top + rect.height / 2;
       const dx = e.clientX - cx;
       const dy = e.clientY - cy;
-      const angle = Math.atan2(dy, dx);
-      let deg = (angle * 180) / Math.PI;
-      deg = deg + 90;
+      const angle = Math.atan2(dy, dx); // -PI..PI
+      let deg = (angle * 180) / Math.PI; // -180..180
+      deg = deg + 90; // on tourne pour aligner en haut
       if (deg < 0) deg += 360;
       currentH = deg;
-      updateWheelIndicator();
-      updateSLBackground();
       const hex = hslToHex(currentH, currentS, currentL);
       setCurrentColorFromHex(hex);
     }
 
     // init couleur
     setCurrentColorFromHex("#FF7A90");
-    updateSLBackground();
-    updateSLIndicatorFromHSL();
 
-    // --- interactions roue & SL ---
+    // Roue chromatique interactive
     colorWheel.addEventListener("mousedown", (e) => {
       wheelDragging = true;
       handleWheelEvent(e);
     });
     document.addEventListener("mousemove", (e) => {
-      if (wheelDragging) handleWheelEvent(e);
-      if (slDragging) updateFromSLMouse(e);
+      if (wheelDragging) {
+        handleWheelEvent(e);
+      }
     });
     document.addEventListener("mouseup", () => {
       wheelDragging = false;
-      slDragging = false;
     });
 
-    slArea.addEventListener("mousedown", (e) => {
-      slDragging = true;
-      updateFromSLMouse(e);
-      e.stopPropagation();
-    });
-
-    // HEX input
+    // HEX => mise à jour
     hexInput.addEventListener("blur", () => {
       const hex = normalizeHex(hexInput.value);
       if (!hex) {
@@ -1237,73 +1111,41 @@
       }
     });
 
-    // opacité globale pour nouvelles cartes
-    opacityInput.addEventListener("input", () => {
-      currentOpacity = parseInt(opacityInput.value, 10) / 100;
-      opacityInfo.textContent = `Opacité : ${opacityInput.value}%`;
-    });
-
-    // complémentaire
-    complementaryBtn.addEventListener("click", () => {
-      currentH = (currentH + 180) % 360;
-      const hex = hslToHex(currentH, currentS, currentL);
-      setCurrentColorFromHex(hex);
-    });
-
-    // ----- palette / historique -----
-    function addSwatch(data) {
+    // --- Palette strip ---
+    function addSwatch(hex, role, isGradient = false) {
       const swatch = document.createElement("div");
       swatch.classList.add("swatch-chip");
-      swatch.dataset.type = data.type;
-      if (data.type === "color") swatch.dataset.hex = data.hex;
-      if (data.type === "gradient") {
-        swatch.dataset.gradientStops = JSON.stringify(data.stops);
-        swatch.dataset.gradientType = data.gradType;
-      }
+
       const colorDot = document.createElement("div");
       colorDot.classList.add("swatch-chip-color");
-      if (data.type === "color") {
-        colorDot.style.background = data.hex;
+      if (!isGradient) {
+        colorDot.style.background = hex;
       } else {
-        colorDot.style.background = data.cssGradient;
+        colorDot.style.backgroundImage = hex; // hex ici = gradient CSS
       }
+
       const textWrap = document.createElement("div");
       textWrap.classList.add("swatch-chip-text");
+
       const hexSpan = document.createElement("div");
       hexSpan.classList.add("swatch-chip-hex");
-      hexSpan.textContent = data.type === "color" ? data.hex : "dégradé";
+      hexSpan.textContent = isGradient ? "dégradé" : hex;
+
       const roleSpan = document.createElement("div");
       roleSpan.classList.add("swatch-chip-role");
-      roleSpan.textContent = data.label;
+      roleSpan.textContent = role;
+
       textWrap.appendChild(hexSpan);
       textWrap.appendChild(roleSpan);
+
       swatch.appendChild(colorDot);
       swatch.appendChild(textWrap);
+
       paletteStrip.appendChild(swatch);
       paletteStrip.scrollTo({ left: paletteStrip.scrollWidth, behavior: "smooth" });
     }
 
-    paletteStrip.addEventListener("click", async (e) => {
-      const swatch = e.target.closest(".swatch-chip");
-      if (!swatch) return;
-      const type = swatch.dataset.type;
-      if (type === "color") {
-        const hex = swatch.dataset.hex;
-        setCurrentColorFromHex(hex);
-        try {
-          await navigator.clipboard.writeText(hex);
-        } catch {}
-      } else if (type === "gradient") {
-        const stops = JSON.parse(swatch.dataset.gradientStops || "[]");
-        const gradType = swatch.dataset.gradientType || "linear-h";
-        gradientStops = stops.map((s, idx) => ({ id: idx + 1, ...s }));
-        nextGradId = gradientStops.length + 1;
-        renderGradColors();
-        updateGradientPreview(gradType);
-      }
-    });
-
-    // ----- formes -----
+    // --- Forme sélectionnée ---
     shapeButtons.forEach((btn) => {
       btn.addEventListener("click", () => {
         shapeButtons.forEach((b) => b.classList.remove("active"));
@@ -1312,145 +1154,7 @@
       });
     });
 
-    // ----- gradient UI -----
-    function renderGradColors() {
-      gradColorsContainer.innerHTML = "";
-      gradientStops.sort((a, b) => a.pos - b.pos);
-      gradientStops.forEach((stop) => {
-        const row = document.createElement("div");
-        row.classList.add("grad-color-row");
-        row.dataset.id = stop.id;
-        const input = document.createElement("input");
-        input.type = "text";
-        input.value = stop.color;
-        input.addEventListener("blur", () => {
-          const norm = normalizeHex(input.value);
-          if (norm) {
-            stop.color = norm;
-            input.value = norm;
-            updateGradientPreview();
-          } else {
-            input.value = stop.color;
-          }
-        });
-        const range = document.createElement("input");
-        range.type = "range";
-        range.min = 0; range.max = 100;
-        range.value = stop.pos;
-        range.addEventListener("input", () => {
-          stop.pos = parseInt(range.value, 10);
-          perc.textContent = stop.pos + "%";
-          updateGradientPreview();
-        });
-        const perc = document.createElement("span");
-        perc.textContent = stop.pos + "%";
-        row.appendChild(input);
-        row.appendChild(range);
-        row.appendChild(perc);
-        gradColorsContainer.appendChild(row);
-      });
-      updateGradientPreview();
-    }
-
-    function buildGradientCSS(type) {
-      const stops = [...gradientStops].sort((a, b) => a.pos - b.pos);
-      const stopStr = stops.map((s) => `${s.color} ${s.pos}%`).join(", ");
-      let angleStr = "90deg";
-      if (type === "linear-v") angleStr = "180deg";
-      if (type === "linear-d") angleStr = "135deg";
-      if (type === "radial") {
-        return `radial-gradient(circle, ${stopStr})`;
-      }
-      return `linear-gradient(${angleStr}, ${stopStr})`;
-    }
-
-    function updateGradientPreview(typeOverride) {
-      const t = typeOverride || gradTypeSelect.value;
-      gradPreview.style.backgroundImage = buildGradientCSS(t);
-    }
-
-    addGradColorBtn.addEventListener("click", () => {
-      if (gradientStops.length >= 5) return;
-      gradientStops.push({
-        id: nextGradId++,
-        color: "#ffffff",
-        pos: Math.round(100 / (gradientStops.length + 1) * gradientStops.length),
-      });
-      renderGradColors();
-    });
-
-    gradTypeSelect.addEventListener("change", () => updateGradientPreview());
-    renderGradColors();
-
-    addGradientBtn.addEventListener("click", () => {
-      if (gradientStops.length < 2) {
-        alert("Ajoute au moins deux couleurs au dégradé.");
-        return;
-      }
-      const type = gradTypeSelect.value;
-      const sizeRole = gradSizeSelect.value;
-      const cssGradient = buildGradientCSS(type);
-      createGradientCard(gradientStops, type, sizeRole, cssGradient);
-    });
-
-    // ----- textures -----
-    textureUpload.addEventListener("change", (e) => {
-      const files = Array.from(e.target.files || []);
-      files.forEach((file) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-          const id = Date.now() + "-" + Math.random().toString(16).slice(2);
-          textures.push({ id, name: file.name, url: reader.result });
-          renderTextures();
-        };
-        reader.readAsDataURL(file);
-      });
-      textureUpload.value = "";
-    });
-
-    function renderTextures() {
-      texturesStrip.innerHTML = "";
-      textures.forEach((tex) => {
-        const div = document.createElement("div");
-        div.classList.add("texture-chip");
-        div.style.backgroundImage = `url(${tex.url})`;
-        div.dataset.id = tex.id;
-        if (tex.id === currentTextureId) div.classList.add("active");
-        div.addEventListener("click", () => {
-          currentTextureId = tex.id;
-          renderTextures();
-        });
-        texturesStrip.appendChild(div);
-      });
-    }
-
-    // ----- création cartes -----
-    function applyEffectToCard(card, effect) {
-      card.classList.remove("effect-blur", "effect-translucent", "effect-grain");
-      card.dataset.effect = effect;
-      if (effect === "blur") card.classList.add("effect-blur");
-      else if (effect === "translucent") card.classList.add("effect-translucent");
-      else if (effect === "grain") card.classList.add("effect-grain");
-    }
-
-    function applyTextureToCard(card, textureId) {
-      card.dataset.textureId = textureId || "";
-      const tex = textures.find((t) => t.id === textureId);
-      if (tex) {
-        const baseBg = card.dataset.gradientCss || card.dataset.hex || "#ffffff";
-        card.style.backgroundImage = `${baseBg}, url(${tex.url})`;
-        card.style.backgroundSize = "cover, cover";
-        card.style.backgroundBlendMode = "normal, multiply";
-      } else {
-        if (card.dataset.gradientCss) {
-          card.style.backgroundImage = card.dataset.gradientCss;
-        } else {
-          card.style.backgroundImage = "";
-          card.style.backgroundColor = card.dataset.hex || "#ffffff";
-        }
-      }
-    }
-
+    // --- Création de carte couleur simple ---
     function createColorCard(hex, role) {
       const card = document.createElement("div");
       card.classList.add("color-card");
@@ -1462,14 +1166,9 @@
       card.dataset.shape = currentShape;
       card.dataset.rotation = "0";
       card.dataset.scale = "1";
-      card.dataset.opacity = currentOpacity.toString();
+      card.style.background = hex;
       card.style.left = "50%";
       card.style.top = "50%";
-      card.style.opacity = currentOpacity.toString();
-      card.style.backgroundColor = hex;
-      card.dataset.gradientCss = "";
-      applyEffectToCard(card, currentEffect);
-      applyTextureToCard(card, currentTextureId);
 
       const label = document.createElement("div");
       label.classList.add("card-label");
@@ -1489,30 +1188,43 @@
       makeCardInteractive(card);
       applyTextVisibilityToCard(card);
 
-      addSwatch({ type: "color", hex, label: role });
+      addSwatch(hex, role);
     }
 
-    function createGradientCard(stops, gradType, role, cssGradient) {
+    // --- Création de carte dégradé ---
+    function createGradientCard(fromHex, toHex, gradType, role) {
       const card = document.createElement("div");
       card.classList.add("color-card");
       card.classList.add(
         role === "primaire" ? "card-lg" : role === "secondaire" ? "card-md" : "card-sm"
       );
+
+      const start = normalizeHex(fromHex);
+      const end = normalizeHex(toHex);
+      if (!start || !end) return;
+
+      card.dataset.hex = start;
       card.dataset.role = role;
       card.dataset.shape = currentShape;
       card.dataset.rotation = "0";
       card.dataset.scale = "1";
-      card.dataset.opacity = currentOpacity.toString();
+      card.dataset.gradientFrom = start;
+      card.dataset.gradientTo = end;
+      card.dataset.gradientType = gradType;
+
+      let cssGradient = "";
+      if (gradType === "linear-h") {
+        cssGradient = `linear-gradient(90deg, ${start}, ${end})`;
+      } else if (gradType === "linear-v") {
+        cssGradient = `linear-gradient(180deg, ${start}, ${end})`;
+      } else if (gradType === "linear-d") {
+        cssGradient = `linear-gradient(135deg, ${start}, ${end})`;
+      } else if (gradType === "radial") {
+        cssGradient = `radial-gradient(circle, ${start}, ${end})`;
+      }
+      card.style.background = cssGradient;
       card.style.left = "50%";
       card.style.top = "50%";
-      card.style.opacity = currentOpacity.toString();
-
-      card.dataset.gradientStops = JSON.stringify(stops);
-      card.dataset.gradientType = gradType;
-      card.dataset.gradientCss = cssGradient;
-      card.style.backgroundImage = cssGradient;
-      applyEffectToCard(card, currentEffect);
-      applyTextureToCard(card, currentTextureId);
 
       const label = document.createElement("div");
       label.classList.add("card-label");
@@ -1520,7 +1232,7 @@
 
       const hexLabel = document.createElement("div");
       hexLabel.classList.add("card-hex");
-      hexLabel.textContent = stops.map((s) => s.color).join(" → ");
+      hexLabel.textContent = `${start} → ${end}`;
 
       card.appendChild(label);
       card.appendChild(hexLabel);
@@ -1532,33 +1244,29 @@
       makeCardInteractive(card);
       applyTextVisibilityToCard(card);
 
-      addSwatch({
-        type: "gradient",
-        stops,
-        gradType,
-        cssGradient,
-        label: "dégradé",
-      });
+      addSwatch(cssGradient, "dégradé", true);
     }
 
+    // --- Centrage de la carte ---
     function centerCard(card) {
       const compWidth = compContent.clientWidth;
       const compHeight = compContent.clientHeight;
-      const rect = card.getBoundingClientRect();
-      const w = rect.width;
-      const h = rect.height;
+      const cardRect = card.getBoundingClientRect();
+      const w = cardRect.width;
+      const h = cardRect.height;
       const left = (compWidth - w) / 2;
       const top = (compHeight - h) / 2;
       card.style.left = left + "px";
       card.style.top = top + "px";
     }
 
-    // ----- drag + sélection + group -----
+    // --- Drag & sélection & transform ---
     function makeCardInteractive(card) {
       let isDragging = false;
       let startX = 0;
       let startY = 0;
-      let dragContext = null;
+      let initialLeft = 0;
+      let initialTop = 0;
       let moved = false;
 
       function onMouseDown(e) {
@@ -1566,79 +1274,58 @@
         e.preventDefault();
         isDragging = true;
         moved = false;
-
-        const groupId = card.dataset.groupId;
-        const cardsToMove = groupId
-          ? Array.from(compContent.querySelectorAll(`.color-card[data-group-id="${groupId}"]`))
-          : [card];
-
-        dragContext = {
-          cards: cardsToMove,
-          initial: new Map(),
-        };
-        cardsToMove.forEach((c) => {
-          const left = parseFloat(c.style.left) || 0;
-          const top = parseFloat(c.style.top) || 0;
-          dragContext.initial.set(c, { left, top });
-        });
-
         card.classList.add("dragging");
         zIndexCounter++;
-        cardsToMove.forEach((c) => (c.style.zIndex = zIndexCounter.toString()));
+        card.style.zIndex = zIndexCounter.toString();
         startX = e.clientX;
         startY = e.clientY;
-
+        initialLeft = parseFloat(card.style.left) || 0;
+        initialTop = parseFloat(card.style.top) || 0;
         document.addEventListener("mousemove", onMouseMove);
         document.addEventListener("mouseup", onMouseUp);
       }
 
       function onMouseMove(e) {
-        if (!isDragging || !dragContext) return;
+        if (!isDragging) return;
         const dx = (e.clientX - startX) / currentZoom;
         const dy = (e.clientY - startY) / currentZoom;
         if (Math.abs(dx) > 2 || Math.abs(dy) > 2) moved = true;
 
         const compWidth = compContent.clientWidth;
         const compHeight = compContent.clientHeight;
+        const cardRect = card.getBoundingClientRect();
+        const cardWidth = cardRect.width / currentZoom;
+        const cardHeight = cardRect.height / currentZoom;
 
-        dragContext.cards.forEach((c) => {
-          const base = dragContext.initial.get(c);
-          if (!base) return;
-          const rect = c.getBoundingClientRect();
-          const cardWidth = rect.width / currentZoom;
-          const cardHeight = rect.height / currentZoom;
+        let newLeft = initialLeft + dx;
+        let newTop = initialTop + dy;
 
-          let newLeft = base.left + dx;
-          let newTop = base.top + dy;
+        const margin = 20;
+        const maxLeft = compWidth - cardWidth + margin;
+        const maxTop = compHeight - cardHeight + margin;
+        newLeft = Math.min(Math.max(-margin, newLeft), maxLeft);
+        newTop = Math.min(Math.max(-margin, newTop), maxTop);
 
-          const margin = 40;
-          const maxLeft = compWidth - cardWidth + margin;
-          const maxTop = compHeight - cardHeight + margin;
-          newLeft = Math.min(Math.max(-margin, newLeft), maxLeft);
-          newTop = Math.min(Math.max(-margin, newTop), maxTop);
-
-          c.style.left = newLeft + "px";
-          c.style.top = newTop + "px";
-        });
+        card.style.left = newLeft + "px";
+        card.style.top = newTop + "px";
       }
 
       function onMouseUp() {
         isDragging = false;
         card.classList.remove("dragging");
         card.__dragMoved = moved;
-        dragContext = null;
         document.removeEventListener("mousemove", onMouseMove);
         document.removeEventListener("mouseup", onMouseUp);
       }
 
       function onClick(e) {
+        // éviter toggle après un drag
         if (card.__dragMoved) {
           card.__dragMoved = false;
           return;
         }
         const multi = e.shiftKey || e.metaKey || e.ctrlKey;
         toggleSelection(card, multi);
-        e.stopPropagation();
       }
 
       card.addEventListener("mousedown", onMouseDown);
@@ -1674,36 +1361,23 @@
       selectedCards.forEach((c) => c.remove());
       selectedCards.clear();
       updateTransformControlsFromSelection();
-      if (!compContent.querySelector(".color-card, .note")) {
+      if (!compContent.querySelector(".color-card")) {
         emptyHint.style.display = "flex";
       }
     }
 
     deleteSelectedBtn.addEventListener("click", deleteSelected);
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Delete" || e.key === "Backspace") deleteSelected();
+      if (e.key === "Delete" || e.key === "Backspace") {
+        deleteSelected();
+      }
     });
 
-    // cliquer sur le fond = désélectionner
+    // Cliquer sur le fond = désélectionner
     composition.addEventListener("mousedown", (e) => {
       if (e.target === composition || e.target === compContent) {
         clearSelection();
       }
-    });
-
-    // group / ungroup
-    groupBtn.addEventListener("click", () => {
-      if (selectedCards.size < 2) return;
-      const id = "g" + groupCounter++;
-      selectedCards.forEach((c) => {
-        c.dataset.groupId = id;
-      });
-    });
-
-    ungroupBtn.addEventListener("click", () => {
-      selectedCards.forEach((c) => {
-        delete c.dataset.groupId;
-      });
     });
 
     // Transform sliders
@@ -1711,31 +1385,23 @@
       const rot = parseFloat(card.dataset.rotation || "0");
       const scale = parseFloat(card.dataset.scale || "1");
       card.style.transform = `rotate(${rot}deg) scale(${scale})`;
-      const op = parseFloat(card.dataset.opacity || "1");
-      card.style.opacity = op.toString();
     }
 
     function updateTransformControlsFromSelection() {
       if (selectedCards.size === 0) {
         rotationInput.disabled = true;
         scaleInput.disabled = true;
-        cardOpacityInput.disabled = true;
         rotationInput.value = 0;
         scaleInput.value = 100;
-        cardOpacityInput.value = 100;
         return;
       }
       rotationInput.disabled = false;
       scaleInput.disabled = false;
-      cardOpacityInput.disabled = false;
-
       const first = selectedCards.values().next().value;
       const rot = parseFloat(first.dataset.rotation || "0");
       const scl = parseFloat(first.dataset.scale || "1");
-      const op = parseFloat(first.dataset.opacity || "1");
       rotationInput.value = rot;
       scaleInput.value = Math.round(scl * 100);
-      cardOpacityInput.value = Math.round(op * 100);
     }
 
     rotationInput.addEventListener("input", () => {
@@ -1755,26 +1421,7 @@
       });
     });
 
-    cardOpacityInput.addEventListener("input", () => {
-      const value = parseInt(cardOpacityInput.value, 10) / 100;
-      selectedCards.forEach((card) => {
-        card.dataset.opacity = value.toString();
-        applyTransformFromDataset(card);
-      });
-    });
-
-    // Effets
-    effectSelect.addEventListener("change", () => {
-      currentEffect = effectSelect.value;
-    });
-
-    applyEffectBtn.addEventListener("click", () => {
-      selectedCards.forEach((card) => {
-        applyEffectToCard(card, currentEffect);
-      });
-    });
-
-    // Boutons rôle -> création carte
+    // --- Boutons Primaire / Secondaire / Tertiaire ---
     roleButtons.forEach((btn) => {
       btn.addEventListener("click", () => {
         const role = btn.dataset.role;
@@ -1787,7 +1434,22 @@
       });
     });
 
-    // Afficher / masquer texte
+    // --- Bouton dégradé ---
+    addGradientBtn.addEventListener("click", () => {
+      const fromHex = gradStartInput.value;
+      const toHex = gradEndInput.value;
+      const type = gradTypeSelect.value;
+      const sizeRole = gradSizeSelect.value; // primaire / secondaire / tertiaire
+      const norm1 = normalizeHex(fromHex);
+      const norm2 = normalizeHex(toHex);
+      if (!norm1 || !norm2) {
+        alert("Dégradé : entre deux HEX valides (ex : #FF7A90).");
+        return;
+      }
+      createGradientCard(norm1, norm2, type, sizeRole);
+    });
+
+    // --- Afficher / masquer texte ---
     function applyTextVisibilityToCard(card) {
       const labels = card.querySelectorAll(".card-label, .card-hex");
       labels.forEach((el) => {
@@ -1801,182 +1463,95 @@
       cards.forEach(applyTextVisibilityToCard);
     });
 
-    // copier HEX quand on clique sur le hashtag
-    compContent.addEventListener("click", async (e) => {
-      const hexEl = e.target.closest(".card-hex");
-      if (hexEl) {
-        const text = hexEl.textContent.trim();
-        try {
-          await navigator.clipboard.writeText(text);
-        } catch {}
-      }
-    });
-
-    // Zoom
+    // --- Zoom ---
     function updateZoom() {
       compContent.style.transform = `scale(${currentZoom})`;
       zoomLabel.textContent = Math.round(currentZoom * 100) + "%";
     }
+
     zoomOutBtn.addEventListener("click", () => {
       currentZoom = Math.max(0.5, currentZoom - 0.1);
       updateZoom();
     });
+
     zoomInBtn.addEventListener("click", () => {
       currentZoom = Math.min(2.5, currentZoom + 0.1);
       updateZoom();
     });
+
     updateZoom();
 
-    // Notes texte simples
-    addNoteBtn.addEventListener("click", () => {
-      const note = document.createElement("div");
-      note.classList.add("note");
-      note.contentEditable = "true";
-      note.textContent = "Note…";
-      note.style.left = "40px";
-      note.style.top = "40px";
-      compContent.appendChild(note);
-      emptyHint.style.display = "none";
-      makeNoteDraggable(note);
-    });
-
-    function makeNoteDraggable(note) {
-      let dragging = false;
-      let startX = 0, startY = 0;
-      let baseLeft = 0, baseTop = 0;
-      note.addEventListener("mousedown", (e) => {
-        if (e.button !== 0) return;
-        dragging = true;
-        startX = e.clientX;
-        startY = e.clientY;
-        baseLeft = parseFloat(note.style.left) || 0;
-        baseTop = parseFloat(note.style.top) || 0;
-        document.addEventListener("mousemove", move);
-        document.addEventListener("mouseup", up);
-        e.stopPropagation();
-      });
-      function move(e) {
-        if (!dragging) return;
-        const dx = (e.clientX - startX) / currentZoom;
-        const dy = (e.clientY - startY) / currentZoom;
-        note.style.left = baseLeft + dx + "px";
-        note.style.top = baseTop + dy + "px";
-      }
-      function up() {
-        dragging = false;
-        document.removeEventListener("mousemove", move);
-        document.removeEventListener("mouseup", up);
-      }
-    }
-
-    // Reset
+    // --- Reset ---
     resetBtn.addEventListener("click", () => {
-      const nodes = compContent.querySelectorAll(".color-card, .note");
-      nodes.forEach((n) => n.remove());
+      const cards = compContent.querySelectorAll(".color-card");
+      cards.forEach((c) => c.remove());
       paletteStrip.innerHTML = "";
       emptyHint.style.display = "flex";
       clearSelection();
     });
 
-    // Export
+    // --- Export PNG transparent ---
     exportBtn.addEventListener("click", () => {
       const cards = Array.from(compContent.querySelectorAll(".color-card"));
       if (cards.length === 0) {
         alert("Ajoute au moins une carte avant d'exporter 🙂");
         return;
       }
+
       const compWidth = compContent.clientWidth;
       const compHeight = compContent.clientHeight;
-      const scale = 2;
+      const scale = 2; // qualité
+
       const canvas = document.createElement("canvas");
       canvas.width = compWidth * scale;
       canvas.height = compHeight * scale;
       const ctx = canvas.getContext("2d");
 
-      const bgMode = exportBgSelect.value;
+      // fond transparent : on ne remplit rien
 
-      if (bgMode === "white") {
-        ctx.fillStyle = "#ffffff";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-      } else if (bgMode === "grid") {
-        ctx.fillStyle = "#ffffff";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.strokeStyle = "rgba(0,0,0,0.08)";
-        ctx.lineWidth = 1;
-        const gridSize = 40 * scale;
-        for (let x = 0; x < canvas.width; x += gridSize) {
-          ctx.beginPath();
-          ctx.moveTo(x, 0);
-          ctx.lineTo(x, canvas.height);
-          ctx.stroke();
-        }
-        for (let y = 0; y < canvas.height; y += gridSize) {
-          ctx.beginPath();
-          ctx.moveTo(0, y);
-          ctx.lineTo(canvas.width, y);
-          ctx.stroke();
-        }
-      } // transparent: rien
-
+      // trier les cartes par z-index
       cards.sort((a, b) => {
         const za = parseInt(a.style.zIndex || "1", 10);
         const zb = parseInt(b.style.zIndex || "1", 10);
         return za - zb;
       });
 
-      function drawCardShape(ctx, card) {
-        const left = parseFloat(card.style.left) || 0;
-        const top = parseFloat(card.style.top) || 0;
-        const w = card.offsetWidth;
-        const h = card.offsetHeight;
-        const shape = card.dataset.shape || "rounded";
-        const rot = parseFloat(card.dataset.rotation || "0");
-        const scl = parseFloat(card.dataset.scale || "1");
-        const op = parseFloat(card.dataset.opacity || "1");
-        const gradientType = card.dataset.gradientType;
-        const stopsStr = card.dataset.gradientStops;
-        let hex = card.dataset.hex || "#FFFFFF";
-
+      function drawCardShape(ctx, shape, x, y, w, h, fillStyle, gradientInfo, rot, scl) {
+        // shape: "rect", "rounded", "square", "circle", "triangle"
         ctx.save();
+
+        // on applique la transformation globale (scale du canvas + rotation + scale de la carte)
         ctx.scale(scale, scale);
-        ctx.translate(left + w / 2, top + h / 2);
+        ctx.translate(x + w / 2, y + h / 2);
         ctx.rotate((rot * Math.PI) / 180);
         ctx.scale(scl, scl);
-        ctx.globalAlpha = op;
 
         const drawX = -w / 2;
         const drawY = -h / 2;
 
         let gradient = null;
-        if (stopsStr) {
-          let stops;
-          try {
-            stops = JSON.parse(stopsStr);
-          } catch {
-            stops = null;
+        if (gradientInfo) {
+          const { type, from, to } = gradientInfo;
+          if (type === "linear-h") {
+            gradient = ctx.createLinearGradient(drawX, drawY, drawX + w, drawY);
+          } else if (type === "linear-v") {
+            gradient = ctx.createLinearGradient(drawX, drawY, drawX, drawY + h);
+          } else if (type === "linear-d") {
+            gradient = ctx.createLinearGradient(drawX, drawY, drawX + w, drawY + h);
+          } else if (type === "radial") {
+            gradient = ctx.createRadialGradient(
+              drawX + w / 2, drawY + h / 2, 0,
+              drawX + w / 2, drawY + h / 2, Math.max(w, h) / 2
+            );
           }
-          if (stops && stops.length > 0) {
-            const type = gradientType || "linear-h";
-            if (type === "radial") {
-              gradient = ctx.createRadialGradient(
-                drawX + w / 2, drawY + h / 2, 0,
-                drawX + w / 2, drawY + h / 2, Math.max(w, h) / 2
-              );
-            } else {
-              let x0 = drawX, y0 = drawY, x1 = drawX + w, y1 = drawY;
-              if (type === "linear-v") { x1 = drawX; y1 = drawY + h; }
-              if (type === "linear-d") { x1 = drawX + w; y1 = drawY + h; }
-              gradient = ctx.createLinearGradient(x0, y0, x1, y1);
-            }
-            stops.forEach((s) => {
-              const c = normalizeHex(s.color) || hex;
-              const pos = (s.pos || 0) / 100;
-              gradient.addColorStop(pos, c);
-            });
+          if (gradient) {
+            gradient.addColorStop(0, from);
+            gradient.addColorStop(1, to);
           }
         }
 
         ctx.beginPath();
+
         if (shape === "circle") {
           const r = Math.min(w, h) / 2;
           ctx.arc(drawX + w / 2, drawY + h / 2, r, 0, Math.PI * 2);
@@ -1998,34 +1573,66 @@
           ctx.lineTo(drawX, drawY + r);
           ctx.quadraticCurveTo(drawX, drawY, drawX + r, drawY);
         } else {
+          // rect + square
           ctx.rect(drawX, drawY, w, h);
         }
 
-        ctx.fillStyle = gradient || hex;
-        ctx.fill();
-
-        if (showText) {
-          ctx.fillStyle = "rgba(0,0,0,0.7)";
-          ctx.font = "9px system-ui";
-          ctx.textAlign = "center";
-          const labelText = card.dataset.gradientStops
-            ? "dégradé"
-            : (card.dataset.hex || "");
-          ctx.fillText(labelText, 0, drawY + h / 2 - 6);
+        if (gradient) {
+          ctx.fillStyle = gradient;
+        } else {
+          ctx.fillStyle = fillStyle;
         }
+        ctx.fill();
 
         ctx.restore();
       }
 
-      cards.forEach((card) => drawCardShape(ctx, card));
+      cards.forEach((card) => {
+        const left = parseFloat(card.style.left) || 0;
+        const top = parseFloat(card.style.top) || 0;
+        const w = card.offsetWidth;
+        const h = card.offsetHeight;
+        const shape = card.dataset.shape || "rounded";
+        const hex = card.dataset.hex || "#FFFFFF";
+        const gradientType = card.dataset.gradientType;
+        const from = card.dataset.gradientFrom;
+        const to = card.dataset.gradientTo;
+        const rot = parseFloat(card.dataset.rotation || "0");
+        const scl = parseFloat(card.dataset.scale || "1");
 
-      const type = exportTypeSelect.value;
-      let mime = "image/png";
-      if (type === "jpeg") mime = "image/jpeg";
-      const dataUrl = canvas.toDataURL(mime, 1.0);
+        const gradientInfo = gradientType
+          ? { type: gradientType, from, to }
+          : null;
+
+        drawCardShape(ctx, shape, left, top, w, h, hex, gradientInfo, rot, scl);
+
+        // Texte HEX / rôle : seulement si showText actif
+        if (showText) {
+          ctx.save();
+          ctx.scale(scale, scale);
+          ctx.translate(left + w / 2, top + h / 2);
+          ctx.rotate((rot * Math.PI) / 180);
+          ctx.scale(scl, scl);
+
+          const labelY = h / 2 - 12;
+          const hexY = -h / 2 + 16;
+          ctx.fillStyle = "rgba(255,255,255,0.9)";
+          ctx.font = "9px system-ui";
+          ctx.textAlign = "center";
+          if (gradientInfo) {
+            ctx.fillText("dégradé", 0, hexY);
+            ctx.fillText(`${from} → ${to}`, 0, labelY);
+          } else {
+            ctx.fillText(hex, 0, labelY);
+          }
+          ctx.restore();
+        }
+      });
+
+      const dataUrl = canvas.toDataURL("image/png");
       const link = document.createElement("a");
       link.href = dataUrl;
-      link.download = `composition-couleurs.${type}`;
+      link.download = "composition-couleurs.png";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
