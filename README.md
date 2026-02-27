@@ -1,2 +1,2 @@
-# G.laab-color
-Color Manipulation 
+# Studia Color Tools
+Color Manipulation by Maison Galiaa
